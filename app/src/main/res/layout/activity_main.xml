@@ -10,7 +10,7 @@
     <TextView
         android:id="@+id/txtNameApp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="199dp"
         android:fontFamily="@font/chango"
         android:text="@string/garden_trouble"
         android:textColor="@android:color/holo_red_dark"

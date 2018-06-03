@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Clicked 'SKIP'", Toast.LENGTH_SHORT)
+                        .show();
                 startActivity(intent);
             }
         });

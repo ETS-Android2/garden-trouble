@@ -6,4 +6,9 @@
     <string name="btn_skip">SKIP</string>
     <string name="description_grandma">grandma</string>
     <string name="gopher_welcome">gopher_welcome</string>
+    <string name="play_game">PLAY GAME!</string>
+    <string name="options">OPTIONS</string>
+    <string name="help">HELP</string>
+    <string name="main_menu_string_gopher_welcome">Main menu @string/gopher_welcome</string>
+    <string name="main_menu">MAIN MENU</string>
 </resources>
