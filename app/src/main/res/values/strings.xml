@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Garden Trouble</string>
+    <string name="garden_trouble">GARDEN TROUBLE</string>
+    <string name="by_jasleen_kaur">By: Jasleen Kaur</string>
+    <string name="grandma">Grandma</string>
+    <string name="btn_skip">SKIP</string>
+    <string name="description_grandma">grandma</string>
+    <string name="gopher_welcome">gopher_welcome</string>
+</resources>
