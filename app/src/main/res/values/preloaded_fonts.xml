@@ -2,5 +2,7 @@
 <resources>
     <array name="preloaded_fonts" translatable="false">
         <item>@font/chango</item>
+        <item>@font/erica_one</item>
+        <item>@font/luckiest_guy</item>
     </array>
 </resources>

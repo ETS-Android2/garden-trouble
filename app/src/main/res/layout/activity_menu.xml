@@ -26,20 +26,23 @@
 
     <Button
         android:id="@+id/btnPlayGame"
-        android:layout_width="114dp"
-        android:layout_height="66dp"
+        android:layout_width="100dp"
+        android:layout_height="47dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@android:drawable/btn_default"
+        android:background="@drawable/wood"
+        android:drawableBottom="@drawable/ic_play_arrow_black_24dp"
+        android:fontFamily="@font/luckiest_guy"
         android:text="@string/play_game"
+        android:textColor="@android:color/holo_orange_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.255"
+        app:layout_constraintHorizontal_bias="0.245"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.346" />
+        app:layout_constraintVertical_bias="0.419" />
 
     <Button
         android:id="@+id/btnOptions"
@@ -52,10 +55,10 @@
         android:text="@string/options"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.27"
+        app:layout_constraintHorizontal_bias="0.241"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.668" />
+        app:layout_constraintVertical_bias="0.713" />
 
     <Button
         android:id="@+id/btnHelp"
@@ -65,13 +68,14 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:drawableTop="@drawable"
         android:text="@string/help"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.27"
+        app:layout_constraintHorizontal_bias="0.237"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.883" />
+        app:layout_constraintVertical_bias="0.964" />
 
     <ImageView
         android:id="@+id/imageView"
