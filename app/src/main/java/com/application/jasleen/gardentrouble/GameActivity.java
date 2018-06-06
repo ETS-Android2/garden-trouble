@@ -14,10 +14,18 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.Toast;
 
-public class GameActivity extends AppCompatActivity {
+import com.application.jasleen.gardentrouble.model.Game;
 
-    private static final int NUM_ROWS = 2 ;
-    private static final int NUM_COLS = 3;
+import static java.lang.Boolean.TRUE;
+
+public class GameActivity extends AppCompatActivity {
+    //How many mines there should be come from options
+    //These come from options screen
+    public static final int NUM_ROWS = 2 ; //ACCESSSIBLE BY OTHER CLASSES NOW
+    public static final int NUM_COLS = 3;
+    public static final int NUM_RABBITS = 2;
+
+    private Game cellChosen;
 
     Button buttons[][] = new Button[NUM_ROWS][NUM_COLS];
 
@@ -26,7 +34,8 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-
+        cellChosen = new Game();
+        cellChosen.generateGrid(); //calling generate grid here so to create it before anythihng else
         populateButtons();
     }
     public static Intent makeGameIntent(Context context) {
@@ -60,7 +69,7 @@ public class GameActivity extends AppCompatActivity {
                         1.0f));  //weight of how to scale it
 
                 //Make text not cut off on small buttons (FOR NOW)
-                button.setText(col + "," + row); // FOR NOW
+                //button.setText(col + "," + row); // FOR NOW
                 button.setPadding(0,0,0,0);
                 //Wire the button to do something
                 button.setOnClickListener(new View.OnClickListener() {
@@ -78,27 +87,30 @@ public class GameActivity extends AppCompatActivity {
             }
         }
     }
-    private void gridButtonClicked(int col, int row){
+    private void gridButtonClicked(int col, int row) {
         //FOR NOW WITH X AND Y
-        Toast.makeText(this, "Button Clicked: " + col + "," + row ,Toast.LENGTH_SHORT)
+        Toast.makeText(this, "Button Clicked: " + col + "," + row, Toast.LENGTH_SHORT)
                 .show();
         Button button = buttons[row][col];
 
         //Lock Button Sizes by walking through all buttons
         lockButtonSizes();
 
-        //This does not scale image in button
-        //button.setBackgroundResource(R.drawable.gopher_welcome);
+        if (cellChosen.checkIfRabbit(col, row) == TRUE) {
+            //This does not scale image in button
+            //button.setBackgroundResource(R.drawable.gopher_welcome);
 
-        //Scale image to button
-        int newWidth = button.getWidth();
-        int newHeight = button.getHeight();
-        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.gopher_welcome);
-        Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
-        Resources resource = getResources();
-        button.setBackground(new BitmapDrawable(resource, scaledBitmap));
-
-
+            //Scale image to button
+            int newWidth = button.getWidth();
+            int newHeight = button.getHeight();
+            Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.gopher_welcome);
+            Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
+            Resources resource = getResources();
+            button.setBackground(new BitmapDrawable(resource, scaledBitmap));
+        }
+        else{
+            button.setText(cellChosen.currentStateRabbits(col, row));
+        }
     }
 
     private void lockButtonSizes(){
