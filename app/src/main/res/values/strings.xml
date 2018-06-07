@@ -12,7 +12,7 @@
     <string name="main_menu_string_gopher_welcome">Main menu @string/gopher_welcome</string>
     <string name="main_menu">MAIN MENU</string>
     <string name="number_of_gophers">Number of gophers</string>
-    <string name="scans_used">Scans Used</string>
     <string name="number_of_games">Number of games</string>
     <string name="rabbit_welcome">rabbit welcome</string>
+    <string name="scans_used"># Scans Used: 0</string>
 </resources>

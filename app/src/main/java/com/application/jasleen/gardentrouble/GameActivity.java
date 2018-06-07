@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.application.jasleen.gardentrouble.model.Game;
@@ -24,10 +25,13 @@ public class GameActivity extends AppCompatActivity {
     //MAKE THESE COME FROM OPTIONS CLASS/ ACTIVTIY
     public static final int NUM_ROWS = 4 ; //ACCESSSIBLE BY OTHER CLASSES NOW
     public static final int NUM_COLS = 4;
-    public static final int NUM_RABBITS = 3;
+    public static final int NUM_RABBITS = 5;
 
+    private int numberScans =0;
+    private int numberRabbitsFound =0;
     private Game cellChosen;
 
+    private TextView txtNumberFound;
     Button buttons[][] = new Button[NUM_ROWS][NUM_COLS];
 
 
@@ -38,6 +42,8 @@ public class GameActivity extends AppCompatActivity {
         cellChosen = new Game();
         cellChosen.generateGrid(); //calling generate grid here so to create it before anything else
         populateButtons();
+
+        //txtNumberFound.setText("Found "+ numberRabbitsFound + " of " + NUM_RABBITS);
     }
     public static Intent makeGameIntent(Context context) {
         return new Intent(context, GameActivity.class);
@@ -100,6 +106,7 @@ public class GameActivity extends AppCompatActivity {
             //This does not scale image in button
             //button.setBackgroundResource(R.drawable.gopher_welcome);
             if (cellChosen.checkIfAlreadyScanned(col, row) == TRUE){
+                numberScans++;
                 cellChosen.setCellScannedTwice(col, row);
                 button.setText(""+ cellChosen.currentStateRabbits(col, row));
             }
@@ -115,48 +122,30 @@ public class GameActivity extends AppCompatActivity {
                 button.setBackground(new BitmapDrawable(resource, scaledBitmap));
 
                 for (int initCol = 0; initCol < NUM_COLS; initCol++) {
-                    if (cellChosen.checkIfAlreadyScanned(initCol, row) == TRUE && cellChosen.checkIfRabbit(initCol, row) == FALSE) {
+                    if ((cellChosen.checkIfAlreadyScanned(initCol, row) == TRUE && cellChosen.checkIfRabbit(initCol, row) == FALSE)|| cellChosen.rabbitCellScannedTwice(initCol, row)== TRUE) {
                         buttons[row][initCol].setText("" + cellChosen.currentStateRabbits(initCol, row));
                     }
-                    if (cellChosen.rabbitCellScannedTwice(initCol, row)== TRUE){
-                        buttons[row][initCol].setText("" + cellChosen.currentStateRabbits(initCol, row));
-                    }
+//                    if (cellChosen.rabbitCellScannedTwice(initCol, row)== TRUE){
+//                        buttons[row][initCol].setText("" + cellChosen.currentStateRabbits(initCol, row));
+//                    }
                 }
                 for (int initRow = 0; initRow < NUM_ROWS; initRow++) {
-                    if (cellChosen.checkIfAlreadyScanned(col, initRow) == TRUE && cellChosen.checkIfRabbit(col, initRow) == FALSE){
+                    if ((cellChosen.checkIfAlreadyScanned(col, initRow) == TRUE && cellChosen.checkIfRabbit(col, initRow) == FALSE) ||cellChosen.rabbitCellScannedTwice(col, initRow)== TRUE){
                         buttons[initRow][col].setText("" + cellChosen.currentStateRabbits(col, initRow));
                     }
-                    if (cellChosen.rabbitCellScannedTwice(col, initRow)== TRUE){
-                        buttons[initRow][col].setText("" + cellChosen.currentStateRabbits(col, initRow));
-                    }
+//                    if (cellChosen.rabbitCellScannedTwice(col, initRow)== TRUE){
+//                        buttons[initRow][col].setText("" + cellChosen.currentStateRabbits(col, initRow));
+//                    }
                 }
             }
         }
         else{
+            numberScans ++;
             cellChosen.updateCellScanned(col, row);
             button.setText(""+cellChosen.currentStateRabbits(col, row));
         }
-/*
-        if(cellChosen.checkIfAlreadyScanned(col, row)== TRUE){
-            for(int initCol=0; initCol < NUM_COLS; initCol++) {
-                buttons[row][initCol].setText("" + cellChosen.currentStateRabbits(col, row));
-            }
-            for(int initRow = 0; initRow < NUM_ROWS; initRow++){
-                buttons[initRow][col].setText(""+cellChosen.currentStateRabbits(col, initRow));
-            }
-        }
-
-        else if ( cellChosen.checkIfAlreadyScanned(col, row) == FALSE){
-            for(int initCol=0; initCol < NUM_COLS; initCol++){
-                buttons[row][initCol].setText(""+cellChosen.currentStateRabbits(initCol, row));
-            }
-
-            for(int initRow = 0; initRow < NUM_ROWS; initRow++){
-                buttons[initRow][col].setText(""+cellChosen.currentStateRabbits(col, initRow));
-            }
-
-        }
-        */
+        TextView txtNumberScans = findViewById(R.id.txtNumberScans);
+        txtNumberScans.setText("# Scans Used: "+numberScans);
     }
 
     private void lockButtonSizes(){
