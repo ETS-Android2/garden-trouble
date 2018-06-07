@@ -10,18 +10,22 @@ public class Cell {
 
     private boolean hasRabbit;
     private boolean isScanned;
+    private boolean isScannedTwice;
     private int rowColumnNumberRabbits;
+
     //Set data for cell for specific values
-    public Cell(boolean hasRabbit, boolean isScanned, int rowColumnNumberRabbits) {
+    public Cell(boolean hasRabbit, boolean isScanned, int rowColumnNumberRabbits, boolean isScannedTwice) {
         this.hasRabbit = hasRabbit;
         this.isScanned = isScanned;
+        this.isScannedTwice = isScannedTwice;
         this.rowColumnNumberRabbits = rowColumnNumberRabbits;
     }
     //default constructor
     public Cell() {
         this.hasRabbit = FALSE;
         this.isScanned = FALSE;
-        this.rowColumnNumberRabbits = 0; // think it should be 0
+        this.isScannedTwice = FALSE;
+        this.rowColumnNumberRabbits = 0;
     }
 
     // Return the if cell has rabbit or not
@@ -41,6 +45,15 @@ public class Cell {
 
     public void setIsScanned(boolean isScanned){
         this.isScanned = isScanned;
+    }
+
+    // Return if the cell has been scanned or not
+    public boolean getIsScannedTwice() {
+        return isScannedTwice;
+    }
+
+    public void setIsScannedTwice(boolean isScannedTwice){
+        this.isScannedTwice = isScannedTwice;
     }
 
     // Get the total number of rabbits that appear in the row and column of the cell. Throws IllegalArgumentException if weight is less than 0.

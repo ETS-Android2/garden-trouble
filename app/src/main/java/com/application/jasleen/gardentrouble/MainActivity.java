@@ -5,6 +5,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,8 +15,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
-
-    private ImageView gopherImage;
+    private static final String TAG = "MainActivity";
+    private ImageView rabbitImage;
     long animationDuration = 4500;
     Timer timer;
     Intent intent;
@@ -25,16 +26,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         intent = MenuActivity.makeIntent(MainActivity.this);
-        gopherImage = findViewById(R.id.imageViewGopher);
+        rabbitImage = findViewById(R.id.imageViewRabbit);
 
         setUpSkipButton();
         moveRotateAnimation();
 
+        //timer to move to the next activity by itself
         timer = new Timer();
         timer.schedule(new TimerTask(){
             @Override
             public void run() {
                 startActivity(intent);
+
+                //kill Welcome Activity
+                finish();
             }
         },8500);
 
@@ -45,21 +50,32 @@ public class MainActivity extends AppCompatActivity {
         btnSkip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i( TAG, "Clicked 'SKIP'");
                 Toast.makeText(MainActivity.this, "Clicked 'SKIP'", Toast.LENGTH_SHORT)
                         .show();
+                //kill timer to move to the menu activity
+                if (timer!=null){
+                    timer.cancel();
+                }
                 startActivity(intent);
+
+                finish();
+
             }
         });
     }
 
     //Animation of Gopher in the beginning
     private void moveRotateAnimation() {
+
+        Log.i( TAG, "Started animations");
+
         //Moves horizontally
-        ObjectAnimator animatorX =ObjectAnimator.ofFloat(gopherImage,"x", 600);
+        ObjectAnimator animatorX =ObjectAnimator.ofFloat(rabbitImage,"x", 600);
         animatorX.setDuration(animationDuration);
 
         //Rotates
-        ObjectAnimator animatorRotate = ObjectAnimator.ofFloat(gopherImage, "rotation", 0f, 360f );
+        ObjectAnimator animatorRotate = ObjectAnimator.ofFloat(rabbitImage, "rotation", 0f, 360f );
         animatorRotate.setDuration(animationDuration);
 
         //Rotates and moves together

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ public class MenuActivity extends AppCompatActivity {
                         .show();
                 Intent intent = OptionsActivity.makeOptionsIntent(MenuActivity.this);
                 startActivity(intent);
+
             }
         });
     }
@@ -38,10 +40,12 @@ public class MenuActivity extends AppCompatActivity {
         btnPlayGame.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.i("Game Activity", "Opened Game Activity");
                 Toast.makeText(MenuActivity.this, "Clicked 'PLAY GAME'", Toast.LENGTH_SHORT)
                         .show();
                 Intent intent = GameActivity.makeGameIntent(MenuActivity.this);
                 startActivity(intent);
+
             }
         });
 
@@ -60,8 +64,7 @@ public class MenuActivity extends AppCompatActivity {
         });
     }
 
-
-
+    //Menu Activity creates itself
     public static Intent makeIntent(Context context) {
         return new Intent(context, MenuActivity.class);
     }

@@ -4,6 +4,7 @@ import com.application.jasleen.gardentrouble.GameActivity;
 
 import java.util.Random;
 
+import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 public class Game {
@@ -15,6 +16,8 @@ public class Game {
 
         //generate grid
         public void generateGrid(){
+
+            //To generate random places for rabbits in the grid
             Random random = new Random();
 
             //make grid of initial cells with default values
@@ -38,10 +41,21 @@ public class Game {
             }
 
         }
-
+//COME BACK
         public boolean checkIfRabbit(int col, int row){
+            //cell has been scanned before and has a rabbit
             if ( cellCollection[row][col].getHasRabbit() == TRUE){
-                updateCellScanned(col, row);
+                //updateCellScanned(col, row);
+                return true;
+            }
+            else{
+                //updateCellScanned(col,row);
+                return false;
+            }
+        }
+//COME BACK
+        public boolean checkIfAlreadyScanned(int col, int row){
+            if (cellCollection[row][col].getIsScanned() == TRUE){
                 return true;
             }
             else{
@@ -49,6 +63,18 @@ public class Game {
             }
         }
 
+        public void setCellScannedTwice(int col, int row){
+                cellCollection[row][col].setIsScannedTwice(TRUE);
+        }
+
+        public boolean rabbitCellScannedTwice(int col, int row){
+            if (cellCollection[row][col].getIsScannedTwice() == TRUE){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
         public int currentStateRabbits(int col, int row){
             return cellCollection[row][col].getRowColumnNumberRabbits();
         }
@@ -58,25 +84,25 @@ public class Game {
             //Make scanned item true
             if (cellCollection[row][col].getIsScanned() != TRUE){
                 cellCollection[row][col].setIsScanned(TRUE);
-            }
 
-            if ( cellCollection[row][col].getHasRabbit() == TRUE){
-                for(int initialCol=0; initialCol < NUM_COLS; initialCol++){
-                    int initialColScannedRabbits = cellCollection[row][initialCol].getRowColumnNumberRabbits();
-                    initialColScannedRabbits--;
-                    cellCollection[row][initialCol].setRowColumnNumberRabbits(initialColScannedRabbits);
-                }
+                if ( cellCollection[row][col].getHasRabbit() == TRUE) {
+                    for (int initialCol = 0; initialCol < NUM_COLS; initialCol++) {
+                        int initialColScannedRabbits = cellCollection[row][initialCol].getRowColumnNumberRabbits();
+                        initialColScannedRabbits--;
+                        cellCollection[row][initialCol].setRowColumnNumberRabbits(initialColScannedRabbits);
+                    }
 
-                for(int initialRow = 0; initialRow < NUM_ROWS; initialRow++){
-                    int initialRowScannedRabbits = cellCollection[initialRow][col].getRowColumnNumberRabbits();
-                    initialRowScannedRabbits--;
-                    cellCollection[initialRow][col].setRowColumnNumberRabbits(initialRowScannedRabbits);
+                    for (int initialRow = 0; initialRow < NUM_ROWS; initialRow++) {
+                        int initialRowScannedRabbits = cellCollection[initialRow][col].getRowColumnNumberRabbits();
+                        initialRowScannedRabbits--;
+                        cellCollection[initialRow][col].setRowColumnNumberRabbits(initialRowScannedRabbits);
+                    }
                 }
             }
         }
 
         // Setting the scanning values for initial grid
-        public static void initialScanGrid(int row, int col){
+        private static void initialScanGrid(int row, int col){
             for(int initialCol=0; initialCol < NUM_COLS; initialCol++){
                 int initialColScannedRabbits = cellCollection[row][initialCol].getRowColumnNumberRabbits();
                 initialColScannedRabbits++;
