@@ -15,4 +15,5 @@
     <string name="number_of_games">Number of games</string>
     <string name="rabbit_welcome">rabbit welcome</string>
     <string name="scans_used"># Scans Used: 0</string>
+    <string name="rabbit_number">%1$d rabbits</string>
 </resources>

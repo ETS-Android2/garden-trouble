@@ -1,11 +1,13 @@
 package com.application.jasleen.gardentrouble.model;
 
 import com.application.jasleen.gardentrouble.GameActivity;
-
 import java.util.Random;
-
-import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+
+/**
+ * Functions which implement the game logic
+ * @author Jasleen Kaur
+ */
 
 public class Game {
         private static final int NUM_ROWS= GameActivity.NUM_ROWS;
