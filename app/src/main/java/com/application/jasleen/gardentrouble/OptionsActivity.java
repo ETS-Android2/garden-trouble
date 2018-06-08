@@ -17,6 +17,7 @@ public class OptionsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_options);
 
         createSelectRabbitNumberRadioButtons();
+        createSelectGridSizeRadioButtons();
     }
 
     //Options activity can make itself
@@ -24,8 +25,37 @@ public class OptionsActivity extends AppCompatActivity {
         return new Intent(context, OptionsActivity.class);
     }
 
+    private void createSelectGridSizeRadioButtons() {
+        RadioGroup group = findViewById(R.id.radio_group_grid_size);
+
+        //This will give access to the integer array or rows and cols
+        int[] numRows = getResources().getIntArray(R.array.num_grid_size_row);
+        int[] numCols = getResources().getIntArray(R.array.num_grid_size_col);
+
+        //Create the buttons:
+        for(int i = 0; i < numRows.length; i++){
+            final int numRow = numRows[i];
+            final int numCol = numCols[i];
+
+            RadioButton gridButton = new RadioButton(this);
+            gridButton.setText(numRow + " rows by " + numCol + " columns");
+
+            //Set on click callbacks for grid size
+            gridButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(OptionsActivity.this, "You clicked " + numRow + " rows by " + numCol + " columns", Toast.LENGTH_SHORT)
+                            .show();
+                }
+            });
+
+            //Add to grid size radio group:
+            group.addView(gridButton);
+        }
+    }
+
     private void createSelectRabbitNumberRadioButtons() {
-        RadioGroup group = (RadioGroup) findViewById(R.id.radio_group_number_rabbits);
+        RadioGroup group =  findViewById(R.id.radio_group_number_rabbits);
 
         //This will give access to the integer array
         int[] numRabbits = getResources().getIntArray(R.array.num_rabbits);
@@ -46,7 +76,7 @@ public class OptionsActivity extends AppCompatActivity {
                 }
             });
 
-            // Add to radio group:
+            // Add to number of rabbits radio group:
             group.addView(button);
         }
     }
