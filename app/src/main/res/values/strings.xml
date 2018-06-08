@@ -15,4 +15,8 @@
     <string name="number_of_games">Number of games</string>
     <string name="rabbit_welcome">rabbit welcome</string>
     <string name="scans_used"># Scans Used: 0</string>
+    <string name="rabbit_number">%1$d rabbits</string>
+    <string name="number_of_rabbits">Number of Rabbits:</string>
+    <string name="board_size">Board Size:</string>
+    <string name="settings">SETTINGS</string>
 </resources>

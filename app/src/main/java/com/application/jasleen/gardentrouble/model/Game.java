@@ -1,18 +1,23 @@
 package com.application.jasleen.gardentrouble.model;
 
-import com.application.jasleen.gardentrouble.GameActivity;
-
 import java.util.Random;
-
-import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
+/**
+ * Functions which implement the game logic
+ * @author Jasleen Kaur
+ */
+
 public class Game {
+    private int NUM_ROWS = OptionsData.getInstance().getRows();
+        private int NUM_COLS = OptionsData.getInstance().getCols();
+        private int NUM_RABBITS = OptionsData.getInstance().getNumberRabbits();
+        /*
         private static final int NUM_ROWS= GameActivity.NUM_ROWS;
         private static final int NUM_COLS= GameActivity.NUM_COLS;
         private static int NUM_RABBITS = GameActivity.NUM_RABBITS;
-
-        private static Cell[][] cellCollection = new Cell[NUM_ROWS][NUM_COLS];
+        */
+        private Cell[][] cellCollection = new Cell[NUM_ROWS][NUM_COLS];
 
         //generate grid
         public void generateGrid(){
@@ -96,7 +101,7 @@ public class Game {
         }
 
         // Setting the scanning values for initial grid
-        private static void initialScanGrid(int col, int row){
+        private void initialScanGrid(int col, int row){
             for(int initialCol=0; initialCol < NUM_COLS; initialCol++){
                 if( cellCollection[row][initialCol]!= cellCollection[row][col]) {
                     int initialColScannedRabbits = cellCollection[row][initialCol].getRowColumnNumberRabbits();
