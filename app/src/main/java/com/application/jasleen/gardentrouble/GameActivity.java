@@ -16,31 +16,43 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.application.jasleen.gardentrouble.model.Game;
+import com.application.jasleen.gardentrouble.model.OptionsData;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
 
 public class GameActivity extends AppCompatActivity {
     //How many mines there should be come from options
-    //MAKE THESE COME FROM OPTIONS CLASS/ ACTIVTIY
-    public static final int NUM_ROWS = 4 ; //ACCESSSIBLE BY OTHER CLASSES NOW
-    public static final int NUM_COLS = 4;
-    public static final int NUM_RABBITS = 5;
+
+    private int NUM_ROWS;
+    private int NUM_COLS;
+    private int NUM_RABBITS;
 
     private int numberScans =0;
-    private int numberRabbitsFound =0;
-    private Game cellChosen;
+    private Game startGame;
+    Button buttons[][];
 
-    private TextView txtNumberFound;
-    Button buttons[][] = new Button[NUM_ROWS][NUM_COLS];
+    private OptionsData optionsData;
+
+    //private TextView txtNumberFound;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        cellChosen = new Game();
-        cellChosen.generateGrid(); //calling generate grid here so to create it before anything else
+        startGame = new Game();
+
+        //Holding a reference to the optionsData object created in Options Activity
+        optionsData = OptionsData.getInstance();
+        NUM_ROWS = optionsData.getRows();
+        NUM_COLS = optionsData.getCols();
+        buttons = new Button[NUM_ROWS][NUM_COLS];
+
+        NUM_RABBITS = optionsData.getNumberRabbits();
+
+        startGame.generateGrid(); //calling generate grid here so to create it before anything else
         populateButtons();
 
         //txtNumberFound.setText("Found "+ numberRabbitsFound + " of " + NUM_RABBITS);
@@ -75,7 +87,7 @@ public class GameActivity extends AppCompatActivity {
                         TableRow.LayoutParams.MATCH_PARENT,
                         1.0f));  //weight of how to scale it
 
-                //Make text not cut off on small buttons (FOR NOW)
+                //Make text not cut off on small buttons
                 //button.setText(col + "," + row); // FOR NOW
                 button.setPadding(0,0,0,0);
                 //Wire the button to do something
@@ -102,17 +114,17 @@ public class GameActivity extends AppCompatActivity {
 
         //Lock Button Sizes by walking through all buttons
         lockButtonSizes();
-        if (cellChosen.checkIfRabbit(col, row) == TRUE) {
+        if (startGame.checkIfRabbit(col, row) == TRUE) {
             //This does not scale image in button
             //button.setBackgroundResource(R.drawable.gopher_welcome);
-            if (cellChosen.checkIfAlreadyScanned(col, row) == TRUE){
+            if (startGame.checkIfAlreadyScanned(col, row) == TRUE){
                 numberScans++;
-                cellChosen.setCellScannedTwice(col, row);
-                button.setText(""+ cellChosen.currentStateRabbits(col, row));
+                startGame.setCellScannedTwice(col, row);
+                button.setText(""+ startGame.currentStateRabbits(col, row));
             }
             else {
 
-                cellChosen.updateCellScanned(col, row);
+                startGame.updateCellScanned(col, row);
                 //Scale image to button
                 int newWidth = button.getWidth();
                 int newHeight = button.getHeight();
@@ -122,27 +134,30 @@ public class GameActivity extends AppCompatActivity {
                 button.setBackground(new BitmapDrawable(resource, scaledBitmap));
 
                 for (int initCol = 0; initCol < NUM_COLS; initCol++) {
-                    if ((cellChosen.checkIfAlreadyScanned(initCol, row) == TRUE && cellChosen.checkIfRabbit(initCol, row) == FALSE)|| cellChosen.rabbitCellScannedTwice(initCol, row)== TRUE) {
-                        buttons[row][initCol].setText("" + cellChosen.currentStateRabbits(initCol, row));
+                    //rename game
+                    if ((startGame.checkIfAlreadyScanned(initCol, row) == TRUE && startGame.checkIfRabbit(initCol, row) == FALSE)||
+                            startGame.rabbitCellScannedTwice(initCol, row)== TRUE) {
+                        buttons[row][initCol].setText("" + startGame.currentStateRabbits(initCol, row));
                     }
-//                    if (cellChosen.rabbitCellScannedTwice(initCol, row)== TRUE){
-//                        buttons[row][initCol].setText("" + cellChosen.currentStateRabbits(initCol, row));
+//                    if (startGame.rabbitCellScannedTwice(initCol, row)== TRUE){
+//                        buttons[row][initCol].setText("" + startGame.currentStateRabbits(initCol, row));
 //                    }
                 }
                 for (int initRow = 0; initRow < NUM_ROWS; initRow++) {
-                    if ((cellChosen.checkIfAlreadyScanned(col, initRow) == TRUE && cellChosen.checkIfRabbit(col, initRow) == FALSE) ||cellChosen.rabbitCellScannedTwice(col, initRow)== TRUE){
-                        buttons[initRow][col].setText("" + cellChosen.currentStateRabbits(col, initRow));
+                    if ((startGame.checkIfAlreadyScanned(col, initRow) == TRUE && startGame.checkIfRabbit(col, initRow) == FALSE) ||
+                            startGame.rabbitCellScannedTwice(col, initRow) == TRUE){
+                        buttons[initRow][col].setText("" + startGame.currentStateRabbits(col, initRow));
                     }
-//                    if (cellChosen.rabbitCellScannedTwice(col, initRow)== TRUE){
-//                        buttons[initRow][col].setText("" + cellChosen.currentStateRabbits(col, initRow));
+//                    if (startGame.rabbitCellScannedTwice(col, initRow)== TRUE){
+//                        buttons[initRow][col].setText("" + startGame.currentStateRabbits(col, initRow));
 //                    }
                 }
             }
         }
         else{
             numberScans ++;
-            cellChosen.updateCellScanned(col, row);
-            button.setText(""+cellChosen.currentStateRabbits(col, row));
+            startGame.updateCellScanned(col, row);
+            button.setText(""+ startGame.currentStateRabbits(col, row));
         }
         TextView txtNumberScans = findViewById(R.id.txtNumberScans);
         txtNumberScans.setText("# Scans Used: "+numberScans);

@@ -9,12 +9,23 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.application.jasleen.gardentrouble.model.OptionsData;
+
 public class OptionsActivity extends AppCompatActivity {
+
+    private OptionsData optionsData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
+
+        //TODO: GET VALUES HERE
+
+
+
+        //Instantiate OptionsData
+        optionsData = OptionsData.getInstance();
 
         createSelectRabbitNumberRadioButtons();
         createSelectGridSizeRadioButtons();
@@ -44,8 +55,11 @@ public class OptionsActivity extends AppCompatActivity {
             gridButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(OptionsActivity.this, "You clicked " + numRow + " rows by " + numCol + " columns", Toast.LENGTH_SHORT)
+                    optionsData.setRows(numRow);
+                    optionsData.setCols(numCol);
+                    Toast.makeText(OptionsActivity.this, "You clicked " + optionsData.getRows() + " rows by " + optionsData.getCols() + " columns", Toast.LENGTH_SHORT)
                             .show();
+
                 }
             });
 
@@ -71,7 +85,8 @@ public class OptionsActivity extends AppCompatActivity {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(OptionsActivity.this, "You clicked " + numRabbit + " rabbits", Toast.LENGTH_SHORT)
+                    optionsData.setNumberRabbits(numRabbit);
+                    Toast.makeText(OptionsActivity.this, "You clicked " + optionsData.getNumberRabbits() + " rabbits", Toast.LENGTH_SHORT)
                             .show();
                 }
             });

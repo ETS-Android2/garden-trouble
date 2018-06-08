@@ -18,4 +18,5 @@
     <string name="rabbit_number">%1$d rabbits</string>
     <string name="number_of_rabbits">Number of Rabbits:</string>
     <string name="board_size">Board Size:</string>
+    <string name="settings">SETTINGS</string>
 </resources>

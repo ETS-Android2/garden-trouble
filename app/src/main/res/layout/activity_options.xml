@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:fontFamily="@font/chango"
-        android:text="SETTINGS"
+        android:text="@string/settings"
         android:textColor="@android:color/holo_red_dark"
         android:textSize="36sp"
         android:textStyle="bold"
@@ -101,12 +101,5 @@
 
         </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </TableLayout>
 </android.support.constraint.ConstraintLayout>
