@@ -70,7 +70,5 @@ public class MenuActivity extends AppCompatActivity {
         return new Intent(context, MenuActivity.class);
     }
 
-    public static Intent makeMenuIntent(FragmentActivity activity) {
-        return new Intent(activity, MenuActivity.class );
-    }
+
 }
