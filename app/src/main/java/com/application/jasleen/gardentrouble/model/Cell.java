@@ -10,21 +10,21 @@ public class Cell {
 
     private boolean hasRabbit;
     private boolean isScanned;
-    private boolean isScannedTwice;
+    private boolean rabbitCheckedOnce;
     private int rowColumnNumberRabbits;
 
     //Set data for cell for specific values
-    public Cell(boolean hasRabbit, boolean isScanned, boolean isScannedTwice, int rowColumnNumberRabbits) {
+    public Cell(boolean hasRabbit, boolean isScanned, boolean rabbitCheckedOnce, int rowColumnNumberRabbits) {
         this.hasRabbit = hasRabbit;
         this.isScanned = isScanned;
-        this.isScannedTwice = isScannedTwice;
+        this.rabbitCheckedOnce = rabbitCheckedOnce;
         this.rowColumnNumberRabbits = rowColumnNumberRabbits;
     }
     //default constructor
     public Cell() {
         this.hasRabbit = FALSE;
         this.isScanned = FALSE;
-        this.isScannedTwice = FALSE;
+        this.rabbitCheckedOnce = FALSE;
         this.rowColumnNumberRabbits = 0;
     }
 
@@ -49,13 +49,13 @@ public class Cell {
     }
 
     // Return if the cell has been scanned twice, this is for cells with rabbits especially
-    public boolean getIsScannedTwice() {
-        return isScannedTwice;
+    public boolean getRabbitCheckedOnce() {
+        return rabbitCheckedOnce;
     }
 
     //Set the cell to have been scanned twice
-    public void setIsScannedTwice(boolean isScannedTwice){
-        this.isScannedTwice = isScannedTwice;
+    public void setRabbitCheckedOnce(boolean isScannedTwice){
+        this.rabbitCheckedOnce = isScannedTwice;
     }
 
     // Return the total number of rabbits that appear in the row and column of the cell.

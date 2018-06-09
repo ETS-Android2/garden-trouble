@@ -19,4 +19,5 @@
     <string name="number_of_rabbits">Number of Rabbits:</string>
     <string name="board_size">Board Size:</string>
     <string name="settings">SETTINGS</string>
+    <string name="number_of_rabbits_found">Number of Rabbits Found</string>
 </resources>
