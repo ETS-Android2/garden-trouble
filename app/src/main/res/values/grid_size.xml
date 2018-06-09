@@ -6,6 +6,8 @@
         <item>6</item>
     </integer-array>
 
+    <integer name="default_num_rabbits">4</integer>
+
     <integer-array name="num_grid_size_col">
         <item>6</item>
         <item>10</item>

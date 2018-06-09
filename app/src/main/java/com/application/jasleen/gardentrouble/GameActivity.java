@@ -1,5 +1,6 @@
 package com.application.jasleen.gardentrouble;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -8,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TableLayout;
@@ -47,20 +49,38 @@ public class GameActivity extends AppCompatActivity {
 
         //Holding a reference to the optionsData object created in Options Activity
         optionsData = OptionsData.getInstance();
+
         NUM_ROWS = optionsData.getRows();
         NUM_COLS = optionsData.getCols();
         buttons = new Button[NUM_ROWS][NUM_COLS];
 
         NUM_RABBITS = optionsData.getNumberRabbits();
+
         txtNumberFound = findViewById(R.id.txtNumberRabbits);
         txtNumberFound.setText("Found " + numberRabbitsFound + " of " + NUM_RABBITS);
+
+        //refreshScreen();
+
 
         startGame.generateGrid(); //calling generate grid here so to create it before anything else
         populateButtons();
 
-        //txtNumberFound.setText("Found "+ numberRabbitsFound + " of " + NUM_RABBITS);
+    }
+/*
+    @Override
+    protected void onResume() {
+        super.onResume();
+        NUM_RABBITS = optionsData.getNumberRabbits();
+
     }
 
+    private void refreshScreen() {
+        //refresh number of mines display
+        txtNumberFound = findViewById(R.id.txtNumberRabbits);
+        NUM_RABBITS = OptionsActivity.getNumRabbitsSelected(this);
+        txtNumberFound.setText("Found " + numberRabbitsFound + " of " + NUM_RABBITS);
+    }
+*/
     public static Intent makeGameIntent(Context context) {
         return new Intent(context, GameActivity.class);
     }
@@ -151,9 +171,19 @@ public class GameActivity extends AppCompatActivity {
         TextView txtNumberScans = findViewById(R.id.txtNumberScans);
         txtNumberScans.setText("# Scans Used: " + numberScans);
 
+        winGame();
 
     }
 
+    private void winGame(){
+        if(numberRabbitsFound == NUM_RABBITS){
+            android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
+            MessageFragment dialog = new MessageFragment();
+            dialog.show(manager, "MessageDialog");
+
+            Log.i("GameActivity", "Just show the dialog");
+        }
+    }
     private void lockButtonSizes() {
         for (int row = 0; row < NUM_ROWS; row++) {
             for (int col = 0; col < NUM_COLS; col++) {

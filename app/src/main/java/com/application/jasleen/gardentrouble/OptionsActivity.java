@@ -2,6 +2,7 @@ package com.application.jasleen.gardentrouble;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,15 +21,19 @@ public class OptionsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
-        //TODO: GET VALUES HERE
-
-
-
         //Instantiate OptionsData
         optionsData = OptionsData.getInstance();
 
+        optionsData.getCols();
+        optionsData.getRows();
+        optionsData.getNumberRabbits();
+
         createSelectRabbitNumberRadioButtons();
         createSelectGridSizeRadioButtons();
+
+//        int savedNumberRabbit = getNumRabbitsSelected(this);
+//        Toast.makeText(this, "Saved Number of Rabbits: "+ savedNumberRabbit, Toast.LENGTH_SHORT)
+//                .show();
     }
 
     //Options activity can make itself
@@ -88,11 +93,34 @@ public class OptionsActivity extends AppCompatActivity {
                     optionsData.setNumberRabbits(numRabbit);
                     Toast.makeText(OptionsActivity.this, "You clicked " + optionsData.getNumberRabbits() + " rabbits", Toast.LENGTH_SHORT)
                             .show();
+                   // saveNumRabbitsSelected(optionsData.getNumberRabbits());
+                    
                 }
             });
 
             // Add to number of rabbits radio group:
             group.addView(button);
+
+//            // Select default button:
+//            if(numRabbit == getNumRabbitsSelected(this)){
+//                button.setChecked(true);
+//            }
         }
     }
+/*
+    private void saveNumRabbitsSelected(int numRabbit) {
+        SharedPreferences prefs = this.getSharedPreferences("AppRabbitPrefs", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("Num Rabbits Selected", numRabbit); //Act as key value
+        editor.apply();
+    }
+    //use static to not create an instance
+    static public int getNumRabbitsSelected(Context context){
+        SharedPreferences prefs = context.getSharedPreferences("AppRabbitPrefs", MODE_PRIVATE);
+        //TODO: Change default value
+        int defaultRabbitNumber = context.getResources().getInteger(R.integer.default_num_rabbits);
+        return prefs.getInt("Num Rabbits Selected", defaultRabbitNumber);
+
+    }
+*/
 }

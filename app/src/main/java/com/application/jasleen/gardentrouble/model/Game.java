@@ -14,11 +14,7 @@ public class Game {
         private int NUM_RABBITS = OptionsData.getInstance().getNumberRabbits();
         private int numberScans;
         private int numberRabbitsFound;
-        /*
-        private static final int NUM_ROWS= GameActivity.NUM_ROWS;
-        private static final int NUM_COLS= GameActivity.NUM_COLS;
-        private static int NUM_RABBITS = GameActivity.NUM_RABBITS;
-        */
+
         private Cell[][] cellCollection = new Cell[NUM_ROWS][NUM_COLS];
 
         //generate grid
