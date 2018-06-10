@@ -2,9 +2,9 @@ package com.application.jasleen.gardentrouble.model;
 
 public class OptionsData {
     //make these actual values
-    private int numRows = 4;
-    private int numCols = 4;
-    private int numberRabbits = 5;
+    private int numRows;
+    private int numCols;
+    private int numberRabbits;
 
     /*
     Singleton support

@@ -15,6 +15,12 @@ import com.application.jasleen.gardentrouble.model.OptionsData;
 public class OptionsActivity extends AppCompatActivity {
     private static final String NUM_RABBITS_PREF_NAME = "Num Rabbits Selected";
     private static final String PREFS_NAME = "AppRabbitPrefs";
+    private static final String COL_SIZE_PREF_NAME = "Col Size Selected";
+    private static final String COL_PREFS_NAME = "AppColSizePrefs";
+    private static final String ROW_SIZE_PREF_NAME = "Row Size Selected";
+    private static final String ROW_PREFS_NAME = "AppRowSizePrefs";
+
+
     private OptionsData optionsData;
 
     @Override
@@ -63,16 +69,52 @@ public class OptionsActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     optionsData.setRows(numRow);
                     optionsData.setCols(numCol);
-                    Toast.makeText(OptionsActivity.this, "You clicked " + optionsData.getRows() + " rows by " + optionsData.getCols() + " columns", Toast.LENGTH_SHORT)
+                    Toast.makeText(OptionsActivity.this, "You clicked " + optionsData.getRows() +
+                            " rows by " + optionsData.getCols() + " columns", Toast.LENGTH_SHORT)
                             .show();
-
+                    saveColSelected(optionsData.getCols());
+                    saveRowSelected(optionsData.getRows());
                 }
             });
 
             //Add to grid size radio group:
             group.addView(gridButton);
+
+            // Select default button:
+            if(numCol == getColSizeSelected(this) && numRow == getRowSizeSelected(this)){
+                gridButton.setChecked(true);
+            }
         }
     }
+
+    private void saveRowSelected(int row) {
+        SharedPreferences prefs = this.getSharedPreferences(ROW_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(ROW_SIZE_PREF_NAME, row);//Act as key value
+        editor.apply();
+    }
+
+    private void saveColSelected(int col) {
+        SharedPreferences prefs = this.getSharedPreferences(COL_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(COL_SIZE_PREF_NAME, col);//Act as key value
+        editor.apply();
+    }
+    static public int getColSizeSelected(Context context){
+        SharedPreferences prefs = context.getSharedPreferences(COL_PREFS_NAME, MODE_PRIVATE);
+        //TODO: Change default value
+        int defaultColSize = context.getResources().getInteger(R.integer.default_col_size);
+        return prefs.getInt(COL_SIZE_PREF_NAME, defaultColSize);
+
+    }
+    static public int getRowSizeSelected(Context context){
+        SharedPreferences prefs = context.getSharedPreferences(ROW_PREFS_NAME, MODE_PRIVATE);
+        //TODO: Change default value
+        int defaultRowSize = context.getResources().getInteger(R.integer.default_row_size);
+        return prefs.getInt(ROW_SIZE_PREF_NAME , defaultRowSize);
+
+    }
+
 
     private void createSelectRabbitNumberRadioButtons() {
         RadioGroup group =  findViewById(R.id.radio_group_number_rabbits);

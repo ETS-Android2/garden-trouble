@@ -52,26 +52,23 @@ public class GameActivity extends AppCompatActivity {
         NUM_ROWS = optionsData.getRows();
         NUM_COLS = optionsData.getCols();
 
-        //NUM_RABBITS = optionsData.getNumberRabbits();
-/*
-        txtNumberFound = findViewById(R.id.txtNumberRabbits);
-        txtNumberFound.setText("Found " + numberRabbitsFound + " of " + NUM_RABBITS);
-*/
         refreshScreen();
-        buttons = new Button[NUM_ROWS][NUM_COLS];
         startGame = new Game();
         startGame.generateGrid(); //calling generate grid here so to create it before anything else
+        buttons = new Button[NUM_ROWS][NUM_COLS];
         populateButtons();
 
     }
-/*
-    @Override
-    protected void onResume() {
-        super.onResume();
-        refreshScreen();
-    }
-*/
+
     private void refreshScreen() {
+
+        //Refresh grid size
+        NUM_COLS = OptionsActivity.getColSizeSelected(this);
+        optionsData.setCols(NUM_COLS);
+
+        NUM_ROWS = OptionsActivity.getRowSizeSelected(this);
+        optionsData.setRows(NUM_ROWS);
+
         //Refresh number of mines display
         txtNumberFound = findViewById(R.id.txtNumberRabbits);
         NUM_RABBITS = OptionsActivity.getNumRabbitsSelected(this);
