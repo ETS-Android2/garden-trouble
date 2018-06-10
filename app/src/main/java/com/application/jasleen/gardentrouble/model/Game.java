@@ -9,11 +9,13 @@ import static java.lang.Boolean.TRUE;
  */
 
 public class Game {
+
         private int NUM_ROWS = OptionsData.getInstance().getRows();
         private int NUM_COLS = OptionsData.getInstance().getCols();
         private int NUM_RABBITS = OptionsData.getInstance().getNumberRabbits();
         private int numberScans;
         private int numberRabbitsFound;
+
 
         private Cell[][] cellCollection = new Cell[NUM_ROWS][NUM_COLS];
 

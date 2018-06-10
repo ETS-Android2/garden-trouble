@@ -45,23 +45,21 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
 
-        startGame = new Game();
 
         //Holding a reference to the optionsData object created in Options Activity
         optionsData = OptionsData.getInstance();
 
         NUM_ROWS = optionsData.getRows();
         NUM_COLS = optionsData.getCols();
-        buttons = new Button[NUM_ROWS][NUM_COLS];
 
-        NUM_RABBITS = optionsData.getNumberRabbits();
-
+        //NUM_RABBITS = optionsData.getNumberRabbits();
+/*
         txtNumberFound = findViewById(R.id.txtNumberRabbits);
         txtNumberFound.setText("Found " + numberRabbitsFound + " of " + NUM_RABBITS);
-
-        //refreshScreen();
-
-
+*/
+        refreshScreen();
+        buttons = new Button[NUM_ROWS][NUM_COLS];
+        startGame = new Game();
         startGame.generateGrid(); //calling generate grid here so to create it before anything else
         populateButtons();
 
@@ -70,17 +68,17 @@ public class GameActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        NUM_RABBITS = optionsData.getNumberRabbits();
-
-    }
-
-    private void refreshScreen() {
-        //refresh number of mines display
-        txtNumberFound = findViewById(R.id.txtNumberRabbits);
-        NUM_RABBITS = OptionsActivity.getNumRabbitsSelected(this);
-        txtNumberFound.setText("Found " + numberRabbitsFound + " of " + NUM_RABBITS);
+        refreshScreen();
     }
 */
+    private void refreshScreen() {
+        //Refresh number of mines display
+        txtNumberFound = findViewById(R.id.txtNumberRabbits);
+        NUM_RABBITS = OptionsActivity.getNumRabbitsSelected(this);
+        optionsData.setNumberRabbits(NUM_RABBITS);
+        txtNumberFound.setText("Found " + numberRabbitsFound + " of " + NUM_RABBITS);
+    }
+
     public static Intent makeGameIntent(Context context) {
         return new Intent(context, GameActivity.class);
     }
@@ -184,6 +182,7 @@ public class GameActivity extends AppCompatActivity {
             Log.i("GameActivity", "Just show the dialog");
         }
     }
+
     private void lockButtonSizes() {
         for (int row = 0; row < NUM_ROWS; row++) {
             for (int col = 0; col < NUM_COLS; col++) {

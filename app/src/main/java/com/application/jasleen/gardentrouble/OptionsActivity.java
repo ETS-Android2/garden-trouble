@@ -13,7 +13,8 @@ import android.widget.Toast;
 import com.application.jasleen.gardentrouble.model.OptionsData;
 
 public class OptionsActivity extends AppCompatActivity {
-
+    private static final String NUM_RABBITS_PREF_NAME = "Num Rabbits Selected";
+    private static final String PREFS_NAME = "AppRabbitPrefs";
     private OptionsData optionsData;
 
     @Override
@@ -93,7 +94,7 @@ public class OptionsActivity extends AppCompatActivity {
                     optionsData.setNumberRabbits(numRabbit);
                     Toast.makeText(OptionsActivity.this, "You clicked " + optionsData.getNumberRabbits() + " rabbits", Toast.LENGTH_SHORT)
                             .show();
-                   // saveNumRabbitsSelected(optionsData.getNumberRabbits());
+                    saveNumRabbitsSelected(optionsData.getNumberRabbits());
                     
                 }
             });
@@ -101,26 +102,27 @@ public class OptionsActivity extends AppCompatActivity {
             // Add to number of rabbits radio group:
             group.addView(button);
 
-//            // Select default button:
-//            if(numRabbit == getNumRabbitsSelected(this)){
-//                button.setChecked(true);
-//            }
+            // Select default button:
+            if(numRabbit == getNumRabbitsSelected(this)){
+                button.setChecked(true);
+            }
+
         }
     }
-/*
+
     private void saveNumRabbitsSelected(int numRabbit) {
-        SharedPreferences prefs = this.getSharedPreferences("AppRabbitPrefs", MODE_PRIVATE);
+        SharedPreferences prefs = this.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("Num Rabbits Selected", numRabbit); //Act as key value
+        editor.putInt(NUM_RABBITS_PREF_NAME, numRabbit); //Act as key value
         editor.apply();
     }
     //use static to not create an instance
     static public int getNumRabbitsSelected(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("AppRabbitPrefs", MODE_PRIVATE);
+        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         //TODO: Change default value
         int defaultRabbitNumber = context.getResources().getInteger(R.integer.default_num_rabbits);
-        return prefs.getInt("Num Rabbits Selected", defaultRabbitNumber);
+        return prefs.getInt(NUM_RABBITS_PREF_NAME , defaultRabbitNumber);
 
     }
-*/
+
 }
