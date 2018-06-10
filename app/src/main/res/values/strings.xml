@@ -23,4 +23,13 @@
     <string name="congratulations_you_won">Congratulations! You Won!</string>
     <string name="congratulations_you_helped_grandma_joe_find_all_the_rabbits_in_her_garden">Congratulations! You helped Grandma Joe find all the rabbits in her garden!</string>
     <string name="congratulations_message_title">Congratulations! You Won!</string>
+    <string name="txtCredit">ABOUT THE AUTHOR:\n\nHi there! My Name is Jasleen Kaur and am in <a href="https://www.cs.sfu.ca/CourseCentral/276/bfraser/index.html">CMPT 276.</a>
+        Hope you enjoy this game made by a brown little girl :)
+        \n\nHOW TO PLAY:\n\nGrandma Joe loves planting vegetables in her garden.
+        Unfortunately, cute little rabbits have started to eat her vegetables!
+        Help Grandma Joe find all the rabbits in her garden by clicking on the cells.
+        When no rabbit is found, the cell will be scanned and a hint will be given stating how many rabbits are present in the column or row of the cell clicked.
+        When a rabbit is found, you will be updated with how many rabbits are remaining to be found. Find all the rabbits in the least number of scans\n\nGood Luck!
+    </string>
+    <string name="txt_help">HELP</string>
 </resources>
