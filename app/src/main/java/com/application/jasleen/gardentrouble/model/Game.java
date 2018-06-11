@@ -80,21 +80,12 @@ public class Game {
         public int currentStateRabbits(int col, int row){
             return cellCollection[row][col].getRowColumnNumberRabbits();
         }
-/*
-        // Scan cell
-        public void scanCell(int col, int row){
-            if (cellCollection[row][col].getIsScanned() != TRUE) {
-                cellCollection[row][col].setIsScanned(TRUE);
-            }
-        }
-*/
+
         // Updates the number of scans and scans cell
         public int updateScan(int col, int row){
             if (!checkIfScanned(col, row)) {
                 numberScans++;
                 cellCollection[row][col].setIsScanned(TRUE);
-
-                //scanCell(col, row);
             }
             return numberScans;
         }

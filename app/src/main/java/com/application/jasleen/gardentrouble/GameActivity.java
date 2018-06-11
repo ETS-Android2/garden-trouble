@@ -1,12 +1,12 @@
 package com.application.jasleen.gardentrouble;
 
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.application.jasleen.gardentrouble.model.Game;
 import com.application.jasleen.gardentrouble.model.OptionsData;
 
-import static java.lang.Boolean.TRUE;
 
 public class GameActivity extends AppCompatActivity {
     //How many mines there should be come from options
@@ -40,7 +39,6 @@ public class GameActivity extends AppCompatActivity {
     private OptionsData optionsData;
 
     private TextView txtNumberFound;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,7 +122,7 @@ public class GameActivity extends AppCompatActivity {
                             public void run() {
                                 gridButtonClicked(finalCol, finalRow);
                             }
-                        }, 1000);
+                        }, 1300);
                     }
                 });
                 tableRow.addView(button); //adding button to the rows
@@ -136,22 +134,27 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void pulseAnimation(int col, int row) {
+        final MediaPlayer scanningCellsSound = MediaPlayer.create(this, R.raw.scan);
+        scanningCellsSound.start();
         Animation animation = new AlphaAnimation(1.0f, 0.0f);
-        animation.setDuration(75);
+        animation.setDuration(100);
         for(int i =0; i < NUM_COLS ; i++) {
-            animation.setStartOffset(i * 60);
+            animation.setStartOffset(i * 75);
             buttons[row][i].startAnimation(animation);
         }
         for(int j =0; j < NUM_ROWS ; j++) {
-            animation.setStartOffset(j * 60);
+            animation.setStartOffset(j * 75);
             buttons[j][col].startAnimation(animation);
         }
     }
 
     private void gridButtonClicked(int col, int row) {
+        final MediaPlayer foundRabbitSound = MediaPlayer.create(this, R.raw.found_rabbit);
+/*
         //FOR NOW WITH X AND Y
         Toast.makeText(this, "Button Clicked: " + col + "," + row, Toast.LENGTH_SHORT)
                 .show();
+*/
         Button button = buttons[row][col];
 
         //Lock Button Sizes by walking through all buttons
@@ -162,6 +165,7 @@ public class GameActivity extends AppCompatActivity {
                 numberScans = startGame.updateScan(col, row);
                 button.setText("" + startGame.currentStateRabbits(col, row));
             } else {
+                foundRabbitSound.start();
                 startGame.updateCells(col, row);
                 numberRabbitsFound= startGame.updateRabbitsFound();
                 txtNumberFound.setText("Found " + numberRabbitsFound + " of " + NUM_RABBITS);
