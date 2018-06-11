@@ -20,7 +20,7 @@ public class Cell {
         this.rabbitCheckedOnce = rabbitCheckedOnce;
         this.rowColumnNumberRabbits = rowColumnNumberRabbits;
     }
-    //default constructor
+    // Default constructor
     public Cell() {
         this.hasRabbit = FALSE;
         this.isScanned = FALSE;

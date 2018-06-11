@@ -115,7 +115,6 @@ public class OptionsActivity extends AppCompatActivity {
 
     }
 
-
     private void createSelectRabbitNumberRadioButtons() {
         RadioGroup group =  findViewById(R.id.radio_group_number_rabbits);
 

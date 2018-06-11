@@ -7,10 +7,13 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -44,8 +47,6 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-
-
         //Holding a reference to the optionsData object created in Options Activity
         optionsData = OptionsData.getInstance();
 
@@ -62,10 +63,11 @@ public class GameActivity extends AppCompatActivity {
 
     private void refreshScreen() {
 
-        //Refresh grid size
+        //Refresh col size
         NUM_COLS = OptionsActivity.getColSizeSelected(this);
         optionsData.setCols(NUM_COLS);
 
+        //Refresh row size
         NUM_ROWS = OptionsActivity.getRowSizeSelected(this);
         optionsData.setRows(NUM_ROWS);
 
@@ -110,19 +112,39 @@ public class GameActivity extends AppCompatActivity {
                 //button.setText(col + "," + row); // FOR NOW
                 button.setPadding(0, 0, 0, 0);
                 //Wire the button to do something
+
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        //Put changing code here
-                        gridButtonClicked(finalCol, finalRow);
-                    }
+                        pulseAnimation(finalCol, finalRow);
 
+                        final Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                gridButtonClicked(finalCol, finalRow);
+                            }
+                        }, 1000);
+                    }
                 });
                 tableRow.addView(button); //adding button to the rows
                 //Having access to the button
                 buttons[row][col] = button;
 
             }
+        }
+    }
+
+    private void pulseAnimation(int col, int row) {
+        Animation animation = new AlphaAnimation(1.0f, 0.0f);
+        animation.setDuration(75);
+        for(int i =0; i < NUM_COLS ; i++) {
+            animation.setStartOffset(i * 60);
+            buttons[row][i].startAnimation(animation);
+        }
+        for(int j =0; j < NUM_ROWS ; j++) {
+            animation.setStartOffset(j * 60);
+            buttons[j][col].startAnimation(animation);
         }
     }
 
@@ -160,7 +182,7 @@ public class GameActivity extends AppCompatActivity {
             }
         } else {
             numberScans = startGame.updateScan(col, row);
-            startGame.scanCell(col, row);
+            //startGame.scanCell(col, row);
             button.setText("" + startGame.currentStateRabbits(col, row));
         }
         TextView txtNumberScans = findViewById(R.id.txtNumberScans);
@@ -200,7 +222,7 @@ public class GameActivity extends AppCompatActivity {
     private void scaleImageToButton(Button button) {
         int newWidth = button.getWidth();
         int newHeight = button.getHeight();
-        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.gopher_welcome);
+        Bitmap originalBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.hello_bunny);
         Bitmap scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, newWidth, newHeight, true);
         Resources resource = getResources();
         button.setBackground(new BitmapDrawable(resource, scaledBitmap));

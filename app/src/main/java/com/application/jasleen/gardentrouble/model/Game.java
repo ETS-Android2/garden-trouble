@@ -4,7 +4,7 @@ import java.util.Random;
 import static java.lang.Boolean.TRUE;
 
 /**
- * Functions which implement the game logic
+ * Class to manage the game logic
  * @author Jasleen Kaur
  */
 
@@ -16,23 +16,21 @@ public class Game {
         private int numberScans;
         private int numberRabbitsFound;
 
-
         private Cell[][] cellCollection = new Cell[NUM_ROWS][NUM_COLS];
 
-        //generate grid
+        // Generate grid
         public void generateGrid(){
 
             //To generate random places for rabbits in the grid
             Random random = new Random();
 
-            //make grid of initial cells with default values
+            // Make grid of initial cells with default values
             for(int row=0; row < NUM_ROWS; row++) {
                 for (int col = 0; col < NUM_COLS; col++) {
                     cellCollection[row][col] = new Cell();
                 }
             }
-
-            //placing random rabbits in their cells
+            // Placing random rabbits in their cells
             while (NUM_RABBITS > 0 ){
                 int row = random.nextInt(NUM_ROWS);
                 int col = random.nextInt(NUM_COLS);
@@ -41,24 +39,39 @@ public class Game {
                     cellCollection[row][col].setHasRabbit(TRUE);
                     NUM_RABBITS --;
                     initialScanGrid(col, row);
-
                 }
-                //initialScanGrid(col, row);
             }
         }
 
-        //check if rabbit is present
-        public boolean checkIfRabbit(int col, int row){
-            //cell has been scanned before and has a rabbit
-            return ( cellCollection[row][col].getHasRabbit());
+    // Setting the scanning values for initial grid
+    private void initialScanGrid(int col, int row){
+        for(int initialCol=0; initialCol < NUM_COLS; initialCol++){
+            if( cellCollection[row][initialCol]!= cellCollection[row][col]) {
+                int initialColScannedRabbits = cellCollection[row][initialCol].getRowColumnNumberRabbits();
+                initialColScannedRabbits++;
+                cellCollection[row][initialCol].setRowColumnNumberRabbits(initialColScannedRabbits);
+            }
         }
 
-        //check if cell has been clicked before
+        for(int initialRow = 0; initialRow < NUM_ROWS; initialRow++){
+            if( cellCollection[initialRow][col]!= cellCollection[row][col]) {
+                int initialRowScannedRabbits = cellCollection[initialRow][col].getRowColumnNumberRabbits();
+                initialRowScannedRabbits++;
+                cellCollection[initialRow][col].setRowColumnNumberRabbits(initialRowScannedRabbits);
+            }
+        }
+    }
+        // Check if rabbit is present
+        public boolean checkIfRabbit(int col, int row){
+            return cellCollection[row][col].getHasRabbit();
+        }
+
+        // Check if cell has been scanned before
         public boolean checkIfScanned(int col, int row){
             return (cellCollection[row][col].getIsScanned());
         }
 
-        //Return true when cell with rabbit is scanned twice
+        // Check if cell with rabbit has been clicked twice
         public boolean rabbitCellClickedAgain(int col, int row){
             return (cellCollection[row][col].getRabbitCheckedOnce());
         }
@@ -67,18 +80,21 @@ public class Game {
         public int currentStateRabbits(int col, int row){
             return cellCollection[row][col].getRowColumnNumberRabbits();
         }
-
+/*
+        // Scan cell
         public void scanCell(int col, int row){
             if (cellCollection[row][col].getIsScanned() != TRUE) {
                 cellCollection[row][col].setIsScanned(TRUE);
             }
         }
-
-        // updates the number of scans
+*/
+        // Updates the number of scans and scans cell
         public int updateScan(int col, int row){
             if (!checkIfScanned(col, row)) {
                 numberScans++;
-                scanCell(col, row);
+                cellCollection[row][col].setIsScanned(TRUE);
+
+                //scanCell(col, row);
             }
             return numberScans;
         }
@@ -88,6 +104,7 @@ public class Game {
             return numberRabbitsFound;
         }
 
+        // Updates all cells in the row and column of rabbit found
         public void updateCells(int col, int row) {
 
             cellCollection[row][col].setRabbitCheckedOnce(TRUE);
@@ -110,24 +127,6 @@ public class Game {
 
         }
 
-        // Setting the scanning values for initial grid
-        private void initialScanGrid(int col, int row){
-            for(int initialCol=0; initialCol < NUM_COLS; initialCol++){
-                if( cellCollection[row][initialCol]!= cellCollection[row][col]) {
-                    int initialColScannedRabbits = cellCollection[row][initialCol].getRowColumnNumberRabbits();
-                    initialColScannedRabbits++;
-                    cellCollection[row][initialCol].setRowColumnNumberRabbits(initialColScannedRabbits);
-                }
-            }
-
-            for(int initialRow = 0; initialRow < NUM_ROWS; initialRow++){
-                if( cellCollection[initialRow][col]!= cellCollection[row][col]) {
-                    int initialRowScannedRabbits = cellCollection[initialRow][col].getRowColumnNumberRabbits();
-                    initialRowScannedRabbits++;
-                    cellCollection[initialRow][col].setRowColumnNumberRabbits(initialRowScannedRabbits);
-                }
-            }
-        }
     }
 
 
