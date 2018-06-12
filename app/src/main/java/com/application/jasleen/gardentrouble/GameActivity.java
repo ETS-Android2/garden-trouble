@@ -55,7 +55,7 @@ public class GameActivity extends AppCompatActivity {
 */
         refreshScreen();
         startGame = new Game();
-        startGame.generateGrid(); //calling generate grid here so to create it before anything else
+        startGame.generateGrid(NUM_COLS, NUM_ROWS, NUM_RABBITS); //calling generate grid here so to create it before anything else
         buttons = new Button[NUM_ROWS][NUM_COLS];
         populateButtons();
 
@@ -64,17 +64,17 @@ public class GameActivity extends AppCompatActivity {
     private void refreshScreen() {
 
         //Refresh col size
-        NUM_COLS = OptionsActivity.getColSizeSelected(this);
-        optionsData.setCols(NUM_COLS);
+        NUM_COLS = optionsData.getCols(this);
+        //optionsData.setCols(NUM_COLS);
 
         //Refresh row size
-        NUM_ROWS = OptionsActivity.getRowSizeSelected(this);
-        optionsData.setRows(NUM_ROWS);
+        NUM_ROWS = optionsData.getRows(this);
+        //optionsData.setRows(NUM_ROWS);
 
         //Refresh number of mines display
         txtNumberFound = findViewById(R.id.txtNumberRabbits);
-        NUM_RABBITS = OptionsActivity.getNumRabbitsSelected(this);
-        optionsData.setNumberRabbits(NUM_RABBITS);
+        NUM_RABBITS = optionsData.getNumberRabbits(this);
+        //optionsData.setNumberRabbits(NUM_RABBITS);
         txtNumberFound.setText("Found " + numberRabbitsFound + " of " + NUM_RABBITS);
 
         updateUI();
@@ -88,7 +88,6 @@ public class GameActivity extends AppCompatActivity {
         }
         else{
             numberGamesPlayed = getNumberGamesPlayed(this);
-
         }
         numberGamesPlayed++;
         TextView txtNumberGamesPlayed = findViewById(R.id.txtNumberGames);
@@ -166,18 +165,15 @@ public class GameActivity extends AppCompatActivity {
     private void pulseAnimation(int col, int row) {
         final MediaPlayer scanningCellsSound = MediaPlayer.create(this, R.raw.scan);
         scanningCellsSound.start();
-        //animation.setDuration(150);
+        Animation animation = new AlphaAnimation(1.0f, 0.0f);
+        animation.setDuration(150);
         for(int i =0; i < NUM_COLS ; i++) {
-            Animation animationColumn = new AlphaAnimation(1.0f, 0.0f);
-            animationColumn.setDuration(150);
-            animationColumn.setStartOffset(i * 75);
-            buttons[row][i].startAnimation(animationColumn);
+            animation.setStartOffset(i * 75);
+            buttons[row][i].startAnimation(animation);
         }
         for(int j =0; j < NUM_ROWS ; j++) {
-            Animation animationRow = new AlphaAnimation(1.0f, 0.0f);
-            animationRow.setDuration(150);
-            animationRow.setStartOffset(j * 75);
-            buttons[j][col].startAnimation(animationRow);
+            animation.setStartOffset(j * 75);
+            buttons[j][col].startAnimation(animation);
         }
     }
 

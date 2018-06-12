@@ -10,16 +10,21 @@ import static java.lang.Boolean.TRUE;
 
 public class Game {
 
-        private int NUM_ROWS = OptionsData.getInstance().getRows();
-        private int NUM_COLS = OptionsData.getInstance().getCols();
-        private int NUM_RABBITS = OptionsData.getInstance().getNumberRabbits();
+        private int NUM_ROWS;
+        //= OptionsData.getInstance().getRows();
+        private int NUM_COLS;
+                //= OptionsData.getInstance().getCols();
+        //private int NUM_RABBITS = OptionsData.getInstance().getNumberRabbits();
         private int numberScans;
         private int numberRabbitsFound;
-
-        private Cell[][] cellCollection = new Cell[NUM_ROWS][NUM_COLS];
+        private Cell[][] cellCollection;
 
         // Generate grid
-        public void generateGrid(){
+        public void generateGrid(int cols, int rows, int numberRabbits){
+             int NUM_RABBITS = numberRabbits;
+             NUM_ROWS = rows;
+             NUM_COLS = cols;
+             cellCollection = new Cell[NUM_ROWS][NUM_COLS]; // IS THIS OKAY ??
 
             //To generate random places for rabbits in the grid
             Random random = new Random();
@@ -52,7 +57,6 @@ public class Game {
                 cellCollection[row][initialCol].setRowColumnNumberRabbits(initialColScannedRabbits);
             }
         }
-
         for(int initialRow = 0; initialRow < NUM_ROWS; initialRow++){
             if( cellCollection[initialRow][col]!= cellCollection[row][col]) {
                 int initialRowScannedRabbits = cellCollection[initialRow][col].getRowColumnNumberRabbits();
@@ -100,18 +104,19 @@ public class Game {
 
             cellCollection[row][col].setRabbitCheckedOnce(TRUE);
             numberRabbitsFound++;
-            for (int initialCol = 0; initialCol < NUM_COLS; initialCol++) {
-                if (cellCollection[row][initialCol] != cellCollection[row][col]) {
-                    int initialColScannedRabbits = cellCollection[row][initialCol].getRowColumnNumberRabbits();
-                    initialColScannedRabbits--;
-                    cellCollection[row][initialCol].setRowColumnNumberRabbits(initialColScannedRabbits);
+
+            for (int scanCol = 0; scanCol < NUM_COLS; scanCol++) {
+                if (cellCollection[row][scanCol] != cellCollection[row][col]) {
+                    int colScannedRabbits = cellCollection[row][scanCol].getRowColumnNumberRabbits();
+                    colScannedRabbits--;
+                    cellCollection[row][scanCol].setRowColumnNumberRabbits(colScannedRabbits);
                 }
             }
-            for (int initialRow = 0; initialRow < NUM_ROWS; initialRow++) {
-                if (cellCollection[initialRow][col] != cellCollection[row][col]) {
-                    int initialRowScannedRabbits = cellCollection[initialRow][col].getRowColumnNumberRabbits();
-                    initialRowScannedRabbits--;
-                    cellCollection[initialRow][col].setRowColumnNumberRabbits(initialRowScannedRabbits);
+            for (int scanRow = 0; scanRow < NUM_ROWS; scanRow++) {
+                if (cellCollection[scanRow][col] != cellCollection[row][col]) {
+                    int rowScannedRabbits = cellCollection[scanRow][col].getRowColumnNumberRabbits();
+                    rowScannedRabbits--;
+                    cellCollection[scanRow][col].setRowColumnNumberRabbits(rowScannedRabbits);
 
                 }
             }

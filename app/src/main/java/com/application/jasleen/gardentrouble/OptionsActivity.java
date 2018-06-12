@@ -18,13 +18,14 @@ import com.application.jasleen.gardentrouble.model.OptionsData;
 import static java.lang.Boolean.TRUE;
 
 public class OptionsActivity extends AppCompatActivity {
+    /*
     private static final String NUM_RABBITS_PREF_NAME = "Num Rabbits Selected";
     private static final String PREFS_NAME = "AppRabbitPrefs";
     private static final String COL_SIZE_PREF_NAME = "Col Size Selected";
     private static final String COL_PREFS_NAME = "AppColSizePrefs";
     private static final String ROW_SIZE_PREF_NAME = "Row Size Selected";
     private static final String ROW_PREFS_NAME = "AppRowSizePrefs";
-
+*/
 
     private OptionsData optionsData;
 
@@ -35,11 +36,11 @@ public class OptionsActivity extends AppCompatActivity {
 
         //Instantiate OptionsData
         optionsData = OptionsData.getInstance();
-
+/*
         optionsData.getCols();
         optionsData.getRows();
         optionsData.getNumberRabbits();
-
+*/
         createSelectRabbitNumberRadioButtons();
         createSelectGridSizeRadioButtons();
 
@@ -81,20 +82,19 @@ public class OptionsActivity extends AppCompatActivity {
             gridButton.setTextColor(Color.RED);
             Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
             gridButton.setTypeface(boldTypeface);
-            gridButton.setTextSize(16);
             gridButton.setText(numRow + " rows by " + numCol + " columns");
 
             //Set on click callbacks for grid size
             gridButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    optionsData.setRows(numRow);
-                    optionsData.setCols(numCol);
-                    Toast.makeText(OptionsActivity.this, "You clicked " + optionsData.getRows() +
-                            " rows by " + optionsData.getCols() + " columns", Toast.LENGTH_SHORT)
+                    optionsData.setRows(getApplicationContext(),numRow);
+                    optionsData.setCols(getApplicationContext(),numCol);
+                    Toast.makeText(OptionsActivity.this, "You clicked " + optionsData.getRows(getApplicationContext()) +
+                            " rows by " + optionsData.getCols(getApplicationContext()) + " columns", Toast.LENGTH_SHORT)
                             .show();
-                    saveColSelected(optionsData.getCols());
-                    saveRowSelected(optionsData.getRows());
+                    //saveColSelected(optionsData.getCols());
+                    //saveRowSelected(optionsData.getRows());
                 }
             });
 
@@ -102,12 +102,12 @@ public class OptionsActivity extends AppCompatActivity {
             group.addView(gridButton);
 
             // Select default button:
-            if(numCol == getColSizeSelected(this) && numRow == getRowSizeSelected(this)){
+            if(numCol == optionsData.getCols(this) && numRow == optionsData.getRows(this)){
                 gridButton.setChecked(true);
             }
         }
     }
-
+/*
     private void saveRowSelected(int row) {
         SharedPreferences prefs = this.getSharedPreferences(ROW_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -133,7 +133,7 @@ public class OptionsActivity extends AppCompatActivity {
         return prefs.getInt(ROW_SIZE_PREF_NAME , defaultRowSize);
 
     }
-
+*/
     private void createSelectRabbitNumberRadioButtons() {
         RadioGroup group =  findViewById(R.id.radio_group_number_rabbits);
 
@@ -148,17 +148,16 @@ public class OptionsActivity extends AppCompatActivity {
             button.setTextColor(Color.RED);
             Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
             button.setTypeface(boldTypeface);
-            button.setTextSize(16);
             button.setText(getString(R.string.rabbit_number, numRabbit));
 
             // Set on click callbacks for number of rabbits
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    optionsData.setNumberRabbits(numRabbit);
-                    Toast.makeText(OptionsActivity.this, "You clicked " + optionsData.getNumberRabbits() + " rabbits", Toast.LENGTH_SHORT)
+                    optionsData.setNumberRabbits(getApplicationContext(),numRabbit);
+                    Toast.makeText(OptionsActivity.this, "You clicked " + optionsData.getNumberRabbits(getApplicationContext()) + " rabbits", Toast.LENGTH_SHORT)
                             .show();
-                    saveNumRabbitsSelected(optionsData.getNumberRabbits());
+                    //saveNumRabbitsSelected(optionsData.getNumberRabbits());
                     
                 }
             });
@@ -167,13 +166,13 @@ public class OptionsActivity extends AppCompatActivity {
             group.addView(button);
 
             // Select default button:
-            if(numRabbit == getNumRabbitsSelected(this)){
+            if(numRabbit == optionsData.getNumberRabbits(this)){
                 button.setChecked(true);
             }
 
         }
     }
-
+/*
     private void saveNumRabbitsSelected(int numRabbit) {
         SharedPreferences prefs = this.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
@@ -188,5 +187,5 @@ public class OptionsActivity extends AppCompatActivity {
         return prefs.getInt(NUM_RABBITS_PREF_NAME , defaultRabbitNumber);
 
     }
-
+*/
 }

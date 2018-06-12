@@ -3,7 +3,7 @@ package com.application.jasleen.gardentrouble.model;
 import static java.lang.Boolean.FALSE;
 
 /**
- * Manage the state of a cell
+ * Manages the state of a cell
  * @author Jasleen Kaur
  */
 public class Cell {
