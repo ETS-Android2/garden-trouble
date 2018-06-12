@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OptionsActivity">
+    tools:context=".OptionsActivity"
+    android:background="@drawable/sun_garden">
 
     <TextView
         android:id="@+id/txtSettings"
@@ -24,18 +25,18 @@
 
     <TableLayout
         android:id="@+id/tableLayout"
-        android:layout_width="0dp"
+        android:layout_width="447dp"
         android:layout_height="190dp"
         android:layout_marginBottom="8dp"
-        android:layout_marginEnd="38dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginStart="38dp"
         android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.365">
+        app:layout_constraintVertical_bias="0.48">
 
         <TableRow
             android:layout_width="match_parent"
@@ -48,6 +49,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/board_size"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,6 +64,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
                 android:text="@string/number_of_rabbits"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="18sp"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.731"
@@ -74,8 +81,8 @@
 
             <RadioGroup
                 android:id="@+id/radio_group_grid_size"
-                android:layout_width="239dp"
-                android:layout_height="98dp"
+                android:layout_width="131dp"
+                android:layout_height="99dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
@@ -89,8 +96,8 @@
 
             <RadioGroup
                 android:id="@+id/radio_group_number_rabbits"
-                android:layout_width="234dp"
-                android:layout_height="126dp"
+                android:layout_width="204dp"
+                android:layout_height="123dp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
@@ -102,4 +109,20 @@
         </TableRow>
 
     </TableLayout>
+
+    <Button
+        android:id="@+id/btnEraseGamesPlayed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/erase_times_played"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.314"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.97" />
 </android.support.constraint.ConstraintLayout>

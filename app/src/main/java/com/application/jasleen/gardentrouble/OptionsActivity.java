@@ -3,14 +3,19 @@ package com.application.jasleen.gardentrouble;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.application.jasleen.gardentrouble.model.OptionsData;
+
+import static java.lang.Boolean.TRUE;
 
 public class OptionsActivity extends AppCompatActivity {
     private static final String NUM_RABBITS_PREF_NAME = "Num Rabbits Selected";
@@ -38,9 +43,21 @@ public class OptionsActivity extends AppCompatActivity {
         createSelectRabbitNumberRadioButtons();
         createSelectGridSizeRadioButtons();
 
+        setUpEraseGamesPlayedButton();
+
 //        int savedNumberRabbit = getNumRabbitsSelected(this);
 //        Toast.makeText(this, "Saved Number of Rabbits: "+ savedNumberRabbit, Toast.LENGTH_SHORT)
 //                .show();
+    }
+
+    private void setUpEraseGamesPlayedButton() {
+        Button btnEraseTimesPlayed = findViewById(R.id.btnEraseGamesPlayed);
+        btnEraseTimesPlayed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                optionsData.setEraseGamesPlayed(TRUE);
+            }
+        });
     }
 
     //Options activity can make itself
@@ -61,6 +78,10 @@ public class OptionsActivity extends AppCompatActivity {
             final int numCol = numCols[i];
 
             RadioButton gridButton = new RadioButton(this);
+            gridButton.setTextColor(Color.RED);
+            Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
+            gridButton.setTypeface(boldTypeface);
+            gridButton.setTextSize(16);
             gridButton.setText(numRow + " rows by " + numCol + " columns");
 
             //Set on click callbacks for grid size
@@ -102,14 +123,12 @@ public class OptionsActivity extends AppCompatActivity {
     }
     static public int getColSizeSelected(Context context){
         SharedPreferences prefs = context.getSharedPreferences(COL_PREFS_NAME, MODE_PRIVATE);
-        //TODO: Change default value
         int defaultColSize = context.getResources().getInteger(R.integer.default_col_size);
         return prefs.getInt(COL_SIZE_PREF_NAME, defaultColSize);
 
     }
     static public int getRowSizeSelected(Context context){
         SharedPreferences prefs = context.getSharedPreferences(ROW_PREFS_NAME, MODE_PRIVATE);
-        //TODO: Change default value
         int defaultRowSize = context.getResources().getInteger(R.integer.default_row_size);
         return prefs.getInt(ROW_SIZE_PREF_NAME , defaultRowSize);
 
@@ -126,6 +145,10 @@ public class OptionsActivity extends AppCompatActivity {
             final int numRabbit = numRabbits[i];
 
             RadioButton button = new RadioButton(this);
+            button.setTextColor(Color.RED);
+            Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
+            button.setTypeface(boldTypeface);
+            button.setTextSize(16);
             button.setText(getString(R.string.rabbit_number, numRabbit));
 
             // Set on click callbacks for number of rabbits

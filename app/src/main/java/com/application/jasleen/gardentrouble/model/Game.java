@@ -101,12 +101,12 @@ public class Game {
             cellCollection[row][col].setRabbitCheckedOnce(TRUE);
             numberRabbitsFound++;
             for (int initialCol = 0; initialCol < NUM_COLS; initialCol++) {
-                    if (cellCollection[row][initialCol] != cellCollection[row][col]) {
-                        int initialColScannedRabbits = cellCollection[row][initialCol].getRowColumnNumberRabbits();
-                        initialColScannedRabbits--;
-                        cellCollection[row][initialCol].setRowColumnNumberRabbits(initialColScannedRabbits);
-                    }
+                if (cellCollection[row][initialCol] != cellCollection[row][col]) {
+                    int initialColScannedRabbits = cellCollection[row][initialCol].getRowColumnNumberRabbits();
+                    initialColScannedRabbits--;
+                    cellCollection[row][initialCol].setRowColumnNumberRabbits(initialColScannedRabbits);
                 }
+            }
             for (int initialRow = 0; initialRow < NUM_ROWS; initialRow++) {
                 if (cellCollection[initialRow][col] != cellCollection[row][col]) {
                     int initialRowScannedRabbits = cellCollection[initialRow][col].getRowColumnNumberRabbits();

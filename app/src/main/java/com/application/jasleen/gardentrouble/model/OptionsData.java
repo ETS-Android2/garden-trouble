@@ -1,10 +1,18 @@
 package com.application.jasleen.gardentrouble.model;
 
+import android.content.Context;
+
+import com.application.jasleen.gardentrouble.OptionsActivity;
+
+import static java.lang.Boolean.FALSE;
+
 public class OptionsData {
     //make these actual values
+    //Context context;
     private int numRows;
     private int numCols;
     private int numberRabbits;
+    private boolean eraseGamesPlayed = FALSE;
 
     /*
     Singleton support
@@ -48,5 +56,13 @@ public class OptionsData {
 
     public void setNumberRabbits(int numberRabbits){
         this.numberRabbits = numberRabbits;
+    }
+
+    public boolean getEraseGamesPlayed(){
+        return eraseGamesPlayed;
+    }
+
+    public void setEraseGamesPlayed(boolean eraseGamesPlayed){
+        this.eraseGamesPlayed = eraseGamesPlayed;
     }
 }

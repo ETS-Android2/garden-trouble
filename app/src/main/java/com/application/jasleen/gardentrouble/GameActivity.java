@@ -2,6 +2,7 @@ package com.application.jasleen.gardentrouble;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,20 +26,21 @@ import com.application.jasleen.gardentrouble.model.OptionsData;
 
 
 public class GameActivity extends AppCompatActivity {
-    //How many mines there should be come from options
+    private int numberGamesPlayed=0;
+    private static final String NUM_GAMES_PREF_NAME = "Num Games Played";
+    private static final String GAMES_PREFS_NAME = "AppGamesPrefs";
 
     private int NUM_ROWS;
     private int NUM_COLS;
     private int NUM_RABBITS;
     private int numberRabbitsFound =0;
-
     private int numberScans;
+    private TextView txtNumberFound;
+
     private Game startGame;
+    private OptionsData optionsData;
     Button buttons[][];
 
-    private OptionsData optionsData;
-
-    private TextView txtNumberFound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +49,10 @@ public class GameActivity extends AppCompatActivity {
 
         //Holding a reference to the optionsData object created in Options Activity
         optionsData = OptionsData.getInstance();
-
+/*      //THIS IS NOT NEEDED THEN? Not using Singleton here but kind of using it later?
         NUM_ROWS = optionsData.getRows();
         NUM_COLS = optionsData.getCols();
-
+*/
         refreshScreen();
         startGame = new Game();
         startGame.generateGrid(); //calling generate grid here so to create it before anything else
@@ -74,8 +76,39 @@ public class GameActivity extends AppCompatActivity {
         NUM_RABBITS = OptionsActivity.getNumRabbitsSelected(this);
         optionsData.setNumberRabbits(NUM_RABBITS);
         txtNumberFound.setText("Found " + numberRabbitsFound + " of " + NUM_RABBITS);
+
+        updateUI();
     }
 
+
+    private void updateUI(){
+        //START OFF PLAYING FIRST
+        if (optionsData.getEraseGamesPlayed()){
+            numberGamesPlayed =0;
+        }
+        else{
+            numberGamesPlayed = getNumberGamesPlayed(this);
+
+        }
+        numberGamesPlayed++;
+        TextView txtNumberGamesPlayed = findViewById(R.id.txtNumberGames);
+        txtNumberGamesPlayed.setText("Times Played: " + numberGamesPlayed);
+        saveNumberGamesPlayed(numberGamesPlayed);
+
+    }
+    private void saveNumberGamesPlayed(int numberGamesPlayed){
+        //int totalNumberGamesPlayed = numberGamesPlayed + getNumberGamesPlayed(this);
+        SharedPreferences prefs = this.getSharedPreferences(GAMES_PREFS_NAME, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(NUM_GAMES_PREF_NAME, numberGamesPlayed);//Act as key value
+        editor.apply();
+    }
+
+    static public int getNumberGamesPlayed(Context context){
+        SharedPreferences prefs = context.getSharedPreferences(GAMES_PREFS_NAME, MODE_PRIVATE);
+        return prefs.getInt(NUM_GAMES_PREF_NAME, 0);
+
+    }
     public static Intent makeGameIntent(Context context) {
         return new Intent(context, GameActivity.class);
     }
@@ -107,10 +140,7 @@ public class GameActivity extends AppCompatActivity {
                         1.0f));  //weight of how to scale it
 
                 //Make text not cut off on small buttons
-                //button.setText(col + "," + row); // FOR NOW
                 button.setPadding(0, 0, 0, 0);
-                //Wire the button to do something
-
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -136,25 +166,24 @@ public class GameActivity extends AppCompatActivity {
     private void pulseAnimation(int col, int row) {
         final MediaPlayer scanningCellsSound = MediaPlayer.create(this, R.raw.scan);
         scanningCellsSound.start();
-        Animation animation = new AlphaAnimation(1.0f, 0.0f);
-        animation.setDuration(100);
+        //animation.setDuration(150);
         for(int i =0; i < NUM_COLS ; i++) {
-            animation.setStartOffset(i * 75);
-            buttons[row][i].startAnimation(animation);
+            Animation animationColumn = new AlphaAnimation(1.0f, 0.0f);
+            animationColumn.setDuration(150);
+            animationColumn.setStartOffset(i * 75);
+            buttons[row][i].startAnimation(animationColumn);
         }
         for(int j =0; j < NUM_ROWS ; j++) {
-            animation.setStartOffset(j * 75);
-            buttons[j][col].startAnimation(animation);
+            Animation animationRow = new AlphaAnimation(1.0f, 0.0f);
+            animationRow.setDuration(150);
+            animationRow.setStartOffset(j * 75);
+            buttons[j][col].startAnimation(animationRow);
         }
     }
 
     private void gridButtonClicked(int col, int row) {
+
         final MediaPlayer foundRabbitSound = MediaPlayer.create(this, R.raw.found_rabbit);
-/*
-        //FOR NOW WITH X AND Y
-        Toast.makeText(this, "Button Clicked: " + col + "," + row, Toast.LENGTH_SHORT)
-                .show();
-*/
         Button button = buttons[row][col];
 
         //Lock Button Sizes by walking through all buttons
@@ -192,11 +221,11 @@ public class GameActivity extends AppCompatActivity {
         TextView txtNumberScans = findViewById(R.id.txtNumberScans);
         txtNumberScans.setText("# Scans Used: " + numberScans);
 
-        winGame();
+        winGameMessage();
 
     }
 
-    private void winGame(){
+    private void winGameMessage(){
         if(numberRabbitsFound == NUM_RABBITS){
             android.support.v4.app.FragmentManager manager = getSupportFragmentManager();
             MessageFragment dialog = new MessageFragment();
