@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
@@ -19,7 +21,6 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.application.jasleen.gardentrouble.model.Game;
 import com.application.jasleen.gardentrouble.model.OptionsData;
@@ -53,35 +54,27 @@ public class GameActivity extends AppCompatActivity {
         NUM_ROWS = optionsData.getRows();
         NUM_COLS = optionsData.getCols();
 */
-        refreshScreen();
+        NUM_COLS = optionsData.getCols(this);
+        NUM_ROWS = optionsData.getRows(this);
+        NUM_RABBITS = optionsData.getNumberRabbits(this);
+
+        updateUI();
         startGame = new Game();
         startGame.generateGrid(NUM_COLS, NUM_ROWS, NUM_RABBITS); //calling generate grid here so to create it before anything else
         buttons = new Button[NUM_ROWS][NUM_COLS];
         populateButtons();
 
     }
-
-    private void refreshScreen() {
-
-        //Refresh col size
-        NUM_COLS = optionsData.getCols(this);
-        //optionsData.setCols(NUM_COLS);
-
-        //Refresh row size
-        NUM_ROWS = optionsData.getRows(this);
-        //optionsData.setRows(NUM_ROWS);
-
-        //Refresh number of mines display
-        txtNumberFound = findViewById(R.id.txtNumberRabbits);
-        NUM_RABBITS = optionsData.getNumberRabbits(this);
-        //optionsData.setNumberRabbits(NUM_RABBITS);
-        txtNumberFound.setText("Found " + numberRabbitsFound + " of " + NUM_RABBITS);
-
-        updateUI();
+    //Game Activity can make itself
+    public static Intent makeGameIntent(Context context) {
+        return new Intent(context, GameActivity.class);
     }
 
+    //TODO: IF CORRECT CHANGE THIS TO UPDATE UI
+    private void updateUI() {
+        txtNumberFound = findViewById(R.id.txtNumberRabbits);
+        txtNumberFound.setText(getString(R.string.Number_rabbits_found, numberRabbitsFound, NUM_RABBITS)) ;
 
-    private void updateUI(){
         //START OFF PLAYING FIRST
         if (optionsData.getEraseGamesPlayed()){
             numberGamesPlayed =0;
@@ -91,12 +84,12 @@ public class GameActivity extends AppCompatActivity {
         }
         numberGamesPlayed++;
         TextView txtNumberGamesPlayed = findViewById(R.id.txtNumberGames);
-        txtNumberGamesPlayed.setText("Times Played: " + numberGamesPlayed);
+        txtNumberGamesPlayed.setText(getString(R.string.Times_played, numberGamesPlayed));
         saveNumberGamesPlayed(numberGamesPlayed);
-
     }
+
+    //TODO: in OptionsData class?
     private void saveNumberGamesPlayed(int numberGamesPlayed){
-        //int totalNumberGamesPlayed = numberGamesPlayed + getNumberGamesPlayed(this);
         SharedPreferences prefs = this.getSharedPreferences(GAMES_PREFS_NAME, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(NUM_GAMES_PREF_NAME, numberGamesPlayed);//Act as key value
@@ -107,9 +100,6 @@ public class GameActivity extends AppCompatActivity {
         SharedPreferences prefs = context.getSharedPreferences(GAMES_PREFS_NAME, MODE_PRIVATE);
         return prefs.getInt(NUM_GAMES_PREF_NAME, 0);
 
-    }
-    public static Intent makeGameIntent(Context context) {
-        return new Intent(context, GameActivity.class);
     }
 
     private void populateButtons() {
@@ -140,18 +130,23 @@ public class GameActivity extends AppCompatActivity {
 
                 //Make text not cut off on small buttons
                 button.setPadding(0, 0, 0, 0);
+                button.setTextSize(20);
+                Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
+                button.setTypeface(boldTypeface);
+                button.setTextColor(Color.BLACK);
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        pulseAnimation(finalCol, finalRow);
+                    pulseAnimation(finalCol, finalRow);
 
-                        final Handler handler = new Handler();
-                        handler.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                gridButtonClicked(finalCol, finalRow);
-                            }
-                        }, 1300);
+                    // Delay button reveal
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            gridButtonClicked(finalCol, finalRow);
+                        }
+                    }, 1300);
                     }
                 });
                 tableRow.addView(button); //adding button to the rows
@@ -165,15 +160,17 @@ public class GameActivity extends AppCompatActivity {
     private void pulseAnimation(int col, int row) {
         final MediaPlayer scanningCellsSound = MediaPlayer.create(this, R.raw.scan);
         scanningCellsSound.start();
-        Animation animation = new AlphaAnimation(1.0f, 0.0f);
-        animation.setDuration(150);
         for(int i =0; i < NUM_COLS ; i++) {
-            animation.setStartOffset(i * 75);
-            buttons[row][i].startAnimation(animation);
+            Animation colAnimation = new AlphaAnimation(1.0f, 0.0f);
+            colAnimation.setDuration(150);
+            colAnimation.setStartOffset(i * 75);
+            buttons[row][i].startAnimation(colAnimation);
         }
         for(int j =0; j < NUM_ROWS ; j++) {
-            animation.setStartOffset(j * 75);
-            buttons[j][col].startAnimation(animation);
+            Animation rowAnimation = new AlphaAnimation(1.0f, 0.0f);
+            rowAnimation.setDuration(150);
+            rowAnimation.setStartOffset(j * 75);
+            buttons[j][col].startAnimation(rowAnimation);
         }
     }
 
@@ -188,34 +185,33 @@ public class GameActivity extends AppCompatActivity {
 
             if (startGame.rabbitCellClickedAgain(col, row)) {
                 numberScans = startGame.updateScan(col, row);
-                button.setText("" + startGame.currentStateRabbits(col, row));
+                button.setText(getString(R.string.Rabbit_cell_checked, startGame.currentStateRabbits(col, row) ));
             } else {
                 foundRabbitSound.start();
                 startGame.updateCells(col, row);
                 numberRabbitsFound= startGame.updateRabbitsFound();
-                txtNumberFound.setText("Found " + numberRabbitsFound + " of " + NUM_RABBITS);
+                txtNumberFound.setText(getString(R.string.Found_rabbit_update, numberRabbitsFound, NUM_RABBITS));
                 //Scale image to button
                 scaleImageToButton(button);
 
                 for (int initCol = 0; initCol < NUM_COLS; initCol++) {
                     //rename game
                     if (startGame.checkIfScanned(initCol, row)) {
-                        buttons[row][initCol].setText("" + startGame.currentStateRabbits(initCol, row));
+                        buttons[row][initCol].setText(getString(R.string.row_current_update, startGame.currentStateRabbits(initCol, row) ));
                     }
                 }
                 for (int initRow = 0; initRow < NUM_ROWS; initRow++) {
                     if (startGame.checkIfScanned(col, initRow)) {
-                        buttons[initRow][col].setText("" + startGame.currentStateRabbits(col, initRow));
+                        buttons[initRow][col].setText(getString(R.string.col_current_update, startGame.currentStateRabbits(col, initRow)));
                     }
                 }
             }
         } else {
             numberScans = startGame.updateScan(col, row);
-            //startGame.scanCell(col, row);
-            button.setText("" + startGame.currentStateRabbits(col, row));
+            button.setText(getString(R.string.no_rabbit_found, startGame.currentStateRabbits(col, row)));
         }
         TextView txtNumberScans = findViewById(R.id.txtNumberScans);
-        txtNumberScans.setText("# Scans Used: " + numberScans);
+        txtNumberScans.setText(getString(R.string.scans_used_txt, numberScans));
 
         winGameMessage();
 

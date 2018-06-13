@@ -7,24 +7,15 @@ Saves and retrieves values
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.application.jasleen.gardentrouble.OptionsActivity;
 import com.application.jasleen.gardentrouble.R;
 
 import static android.content.Context.MODE_PRIVATE;
 import static java.lang.Boolean.FALSE;
 
 public class OptionsData {
-    private static final String NUM_RABBITS_PREF_NAME = "Num Rabbits";
-    private static final String PREFS_NAME = "AppRabbitPref";
-    private static final String COL_SIZE_PREF_NAME = "Col Size";
-    private static final String COL_PREFS_NAME = "AppColSizePref";
-    private static final String ROW_SIZE_PREF_NAME = "Row Size";
-    private static final String ROW_PREFS_NAME = "AppRowSizePref";
-    //make these actual values
-    //Context context;
-    private int numRows;
-    private int numCols;
-    private int numberRabbits;
+    private static final String NUM_RABBITS_PREF_NAME = "Num Rabbits Selected";
+    private static final String COL_SIZE_PREF_NAME = "Col Size Selected";
+    private static final String ROW_SIZE_PREF_NAME = "Row Size Selected";
     private boolean eraseGamesPlayed = FALSE;
 
     /*
@@ -42,54 +33,44 @@ public class OptionsData {
         }
         return instance;
     }
-
     /*
      Normal object code
+    */
+    private void saveValue(Context context, String key, int value){
+        SharedPreferences prefs = context.getSharedPreferences(key, MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(key, value);
+        editor.apply();
+    }
+    private int loadValue(Context context, String key, int id){
+        SharedPreferences prefs = context.getSharedPreferences(key, MODE_PRIVATE);
+        int defaultVal = context.getResources().getInteger(id);
+        return (prefs.getInt(key, defaultVal));
+    }
 
-     */
     public int getRows(Context context){
-        SharedPreferences prefs = context.getSharedPreferences(ROW_PREFS_NAME, MODE_PRIVATE);
-        int defaultRowSize = context.getResources().getInteger(R.integer.default_row_size);
-        return prefs.getInt(ROW_SIZE_PREF_NAME , defaultRowSize);
-        //return numRows;
+        return loadValue(context, ROW_SIZE_PREF_NAME, R.integer.default_row_size );
     }
 
     public void setRows( Context context, int numRows){
-        SharedPreferences prefs = context.getSharedPreferences(ROW_PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(ROW_SIZE_PREF_NAME, numRows);//Act as key value
-        editor.apply();
-        //this.numRows = numRows;
+         saveValue(context, ROW_SIZE_PREF_NAME, numRows);
     }
 
     public int getCols(Context context){
-        SharedPreferences prefs = context.getSharedPreferences(COL_PREFS_NAME, MODE_PRIVATE);
-        int defaultColSize = context.getResources().getInteger(R.integer.default_col_size);
-        return prefs.getInt(COL_SIZE_PREF_NAME, defaultColSize);
-        //return numCols;
+        return loadValue(context, COL_SIZE_PREF_NAME, R.integer.default_col_size);
+
     }
 
     public void setCols(Context context, int numCols){
-        SharedPreferences prefs = context.getSharedPreferences(COL_PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(COL_SIZE_PREF_NAME, numCols);//Act as key value
-        editor.apply();
-        //this.numCols = numCols;
+        saveValue(context, COL_SIZE_PREF_NAME, numCols);
     }
 
     public int getNumberRabbits(Context context){
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        int defaultRabbitNumber = context.getResources().getInteger(R.integer.default_num_rabbits);
-        return prefs.getInt(NUM_RABBITS_PREF_NAME , defaultRabbitNumber);
-        //return numberRabbits;
+        return loadValue(context, NUM_RABBITS_PREF_NAME, R.integer.default_num_rabbits);
     }
 
     public void setNumberRabbits(Context context, int numberRabbits){
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(NUM_RABBITS_PREF_NAME, numberRabbits); //Act as key value
-        editor.apply();
-        //this.numberRabbits = numberRabbits;
+        saveValue(context, NUM_RABBITS_PREF_NAME, numberRabbits);
     }
 
     public boolean getEraseGamesPlayed(){

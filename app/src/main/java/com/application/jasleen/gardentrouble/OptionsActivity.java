@@ -36,19 +36,10 @@ public class OptionsActivity extends AppCompatActivity {
 
         //Instantiate OptionsData
         optionsData = OptionsData.getInstance();
-/*
-        optionsData.getCols();
-        optionsData.getRows();
-        optionsData.getNumberRabbits();
-*/
+
         createSelectRabbitNumberRadioButtons();
         createSelectGridSizeRadioButtons();
-
         setUpEraseGamesPlayedButton();
-
-//        int savedNumberRabbit = getNumRabbitsSelected(this);
-//        Toast.makeText(this, "Saved Number of Rabbits: "+ savedNumberRabbit, Toast.LENGTH_SHORT)
-//                .show();
     }
 
     private void setUpEraseGamesPlayedButton() {
@@ -82,7 +73,7 @@ public class OptionsActivity extends AppCompatActivity {
             gridButton.setTextColor(Color.RED);
             Typeface boldTypeface = Typeface.defaultFromStyle(Typeface.BOLD);
             gridButton.setTypeface(boldTypeface);
-            gridButton.setText(numRow + " rows by " + numCol + " columns");
+            gridButton.setText(getString(R.string.grid_size, numRow, numCol));
 
             //Set on click callbacks for grid size
             gridButton.setOnClickListener(new View.OnClickListener() {

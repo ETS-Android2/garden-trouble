@@ -2,6 +2,7 @@ package com.application.jasleen.gardentrouble.model;
 
 import static java.lang.Boolean.FALSE;
 
+//ANYTHING TO THROW FOR BOOLEAN?
 /**
  * Manages the state of a cell
  * @author Jasleen Kaur

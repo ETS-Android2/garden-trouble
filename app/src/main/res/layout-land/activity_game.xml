@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".GameActivity"
-    android:background="@drawable/simple_garden">
+    android:background="@drawable/garden_back">
 
     <TextView
         android:id="@+id/txtNumberRabbits"
@@ -16,6 +16,9 @@
         android:layout_marginStart="6dp"
         android:layout_marginTop="16dp"
         android:text="@string/number_of_rabbits_found"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.021"
@@ -32,6 +35,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/scans_used"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.964"
@@ -48,12 +54,15 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/number_of_games"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.965"
+        app:layout_constraintHorizontal_bias="0.981"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.968" />
+        app:layout_constraintVertical_bias="0.884" />
 
     <TableLayout
         android:id="@+id/tableForButtons"

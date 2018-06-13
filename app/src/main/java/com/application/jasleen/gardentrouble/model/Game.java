@@ -48,23 +48,29 @@ public class Game {
             }
         }
 
-    // Setting the scanning values for initial grid
-    private void initialScanGrid(int col, int row){
-        for(int initialCol=0; initialCol < NUM_COLS; initialCol++){
-            if( cellCollection[row][initialCol]!= cellCollection[row][col]) {
-                int initialColScannedRabbits = cellCollection[row][initialCol].getRowColumnNumberRabbits();
-                initialColScannedRabbits++;
-                cellCollection[row][initialCol].setRowColumnNumberRabbits(initialColScannedRabbits);
+        // Setting the scanning values for initial grid
+        private void initialScanGrid(int col, int row){
+            for(int initialCol=0; initialCol < NUM_COLS; initialCol++){
+                if( cellCollection[row][initialCol]!= cellCollection[row][col]) {
+                    int initialColScannedRabbits = cellCollection[row][initialCol].getRowColumnNumberRabbits();
+                    initialColScannedRabbits++;
+                    cellCollection[row][initialCol].setRowColumnNumberRabbits(initialColScannedRabbits);
+                }
+            }
+            for(int initialRow = 0; initialRow < NUM_ROWS; initialRow++){
+                if( cellCollection[initialRow][col]!= cellCollection[row][col]) {
+                    int initialRowScannedRabbits = cellCollection[initialRow][col].getRowColumnNumberRabbits();
+                    initialRowScannedRabbits++;
+                    cellCollection[initialRow][col].setRowColumnNumberRabbits(initialRowScannedRabbits);
+                }
             }
         }
-        for(int initialRow = 0; initialRow < NUM_ROWS; initialRow++){
-            if( cellCollection[initialRow][col]!= cellCollection[row][col]) {
-                int initialRowScannedRabbits = cellCollection[initialRow][col].getRowColumnNumberRabbits();
-                initialRowScannedRabbits++;
-                cellCollection[initialRow][col].setRowColumnNumberRabbits(initialRowScannedRabbits);
-            }
-        }
+
+        // Update number of rabbits found
+        public int updateRabbitsFound(){
+        return numberRabbitsFound;
     }
+
         // Check if rabbit is present
         public boolean checkIfRabbit(int col, int row){
             return cellCollection[row][col].getHasRabbit();
@@ -94,11 +100,6 @@ public class Game {
             return numberScans;
         }
 
-        // Update number of rabbits found
-        public int updateRabbitsFound(){
-            return numberRabbitsFound;
-        }
-
         // Updates all cells in the row and column of rabbit found
         public void updateCells(int col, int row) {
 
@@ -120,7 +121,6 @@ public class Game {
 
                 }
             }
-
         }
 
     }
