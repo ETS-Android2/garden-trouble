@@ -2,7 +2,6 @@ package com.application.jasleen.gardentrouble;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,9 +26,6 @@ import com.application.jasleen.gardentrouble.model.OptionsData;
 
 
 public class GameActivity extends AppCompatActivity {
-    private int numberGamesPlayed=0;
-    private static final String NUM_GAMES_PREF_NAME = "Num Games Played";
-    private static final String GAMES_PREFS_NAME = "AppGamesPrefs";
 
     private int NUM_ROWS;
     private int NUM_COLS;
@@ -37,6 +33,9 @@ public class GameActivity extends AppCompatActivity {
     private int numberRabbitsFound =0;
     private int numberScans;
     private TextView txtNumberFound;
+
+    private MediaPlayer scanningCellsSound;
+    MediaPlayer foundRabbitSound;
 
     private Game startGame;
     private OptionsData optionsData;
@@ -50,10 +49,6 @@ public class GameActivity extends AppCompatActivity {
 
         //Holding a reference to the optionsData object created in Options Activity
         optionsData = OptionsData.getInstance();
-/*      //THIS IS NOT NEEDED THEN? Not using Singleton here but kind of using it later?
-        NUM_ROWS = optionsData.getRows();
-        NUM_COLS = optionsData.getCols();
-*/
         NUM_COLS = optionsData.getCols(this);
         NUM_ROWS = optionsData.getRows(this);
         NUM_RABBITS = optionsData.getNumberRabbits(this);
@@ -70,36 +65,15 @@ public class GameActivity extends AppCompatActivity {
         return new Intent(context, GameActivity.class);
     }
 
-    //TODO: IF CORRECT CHANGE THIS TO UPDATE UI
     private void updateUI() {
         txtNumberFound = findViewById(R.id.txtNumberRabbits);
         txtNumberFound.setText(getString(R.string.Number_rabbits_found, numberRabbitsFound, NUM_RABBITS)) ;
 
         //START OFF PLAYING FIRST
-        if (optionsData.getEraseGamesPlayed()){
-            numberGamesPlayed =0;
-        }
-        else{
-            numberGamesPlayed = getNumberGamesPlayed(this);
-        }
-        numberGamesPlayed++;
+        int numberGamesPlayed = optionsData.getNumberGamesPlayed(this) + 1;
         TextView txtNumberGamesPlayed = findViewById(R.id.txtNumberGames);
         txtNumberGamesPlayed.setText(getString(R.string.Times_played, numberGamesPlayed));
-        saveNumberGamesPlayed(numberGamesPlayed);
-    }
-
-    //TODO: in OptionsData class?
-    private void saveNumberGamesPlayed(int numberGamesPlayed){
-        SharedPreferences prefs = this.getSharedPreferences(GAMES_PREFS_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt(NUM_GAMES_PREF_NAME, numberGamesPlayed);//Act as key value
-        editor.apply();
-    }
-
-    static public int getNumberGamesPlayed(Context context){
-        SharedPreferences prefs = context.getSharedPreferences(GAMES_PREFS_NAME, MODE_PRIVATE);
-        return prefs.getInt(NUM_GAMES_PREF_NAME, 0);
-
+        optionsData.setNumberGamesPlayed(this, numberGamesPlayed);
     }
 
     private void populateButtons() {
@@ -158,7 +132,8 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void pulseAnimation(int col, int row) {
-        final MediaPlayer scanningCellsSound = MediaPlayer.create(this, R.raw.scan);
+        if(scanningCellsSound!=null) { scanningCellsSound.release(); }
+        scanningCellsSound = MediaPlayer.create(this, R.raw.scan);
         scanningCellsSound.start();
         for(int i =0; i < NUM_COLS ; i++) {
             Animation colAnimation = new AlphaAnimation(1.0f, 0.0f);
@@ -175,8 +150,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void gridButtonClicked(int col, int row) {
-
-        final MediaPlayer foundRabbitSound = MediaPlayer.create(this, R.raw.found_rabbit);
         Button button = buttons[row][col];
 
         //Lock Button Sizes by walking through all buttons
@@ -187,7 +160,7 @@ public class GameActivity extends AppCompatActivity {
                 numberScans = startGame.updateScan(col, row);
                 button.setText(getString(R.string.Rabbit_cell_checked, startGame.currentStateRabbits(col, row) ));
             } else {
-                foundRabbitSound.start();
+                foundRabbitSound();
                 startGame.updateCells(col, row);
                 numberRabbitsFound= startGame.updateRabbitsFound();
                 txtNumberFound.setText(getString(R.string.Found_rabbit_update, numberRabbitsFound, NUM_RABBITS));
@@ -215,6 +188,12 @@ public class GameActivity extends AppCompatActivity {
 
         winGameMessage();
 
+    }
+
+    private void foundRabbitSound(){
+        if(scanningCellsSound!=null) { scanningCellsSound.release(); }
+        foundRabbitSound = MediaPlayer.create(this, R.raw.found_rabbit);
+        foundRabbitSound.start();
     }
 
     private void winGameMessage(){

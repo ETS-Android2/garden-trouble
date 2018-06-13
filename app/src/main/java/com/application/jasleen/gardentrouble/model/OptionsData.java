@@ -16,7 +16,23 @@ public class OptionsData {
     private static final String NUM_RABBITS_PREF_NAME = "Num Rabbits Selected";
     private static final String COL_SIZE_PREF_NAME = "Col Size Selected";
     private static final String ROW_SIZE_PREF_NAME = "Row Size Selected";
-    private boolean eraseGamesPlayed = FALSE;
+    private static final String NUM_GAMES_PREF_NAME = "Number of Games Played";
+
+    private static final String FOUR_SIX_PREF_NAME = "4 rows by 6 cols with 6 rabbits";
+    private static final String FOUR_TEN_PREF_NAME = "4 rows by 6 cols with 10 rabbits";
+    private static final String FOUR_FIFTEEN_PREF_NAME = "4 rows by 6 cols with 15 rabbits";
+    private static final String FOUR_TWENTY_PREF_NAME = "4 rows by 6 cols with 20 rabbits";
+
+    private static final String FIVE_SIX_PREF_NAME = "5 rows by 10 cols with 6 rabbits";
+    private static final String FIVE_TEN_PREF_NAME = "5 rows by 10 cols with 10 rabbits";
+    private static final String FIVE_FIFTEEN_PREF_NAME = "5 rows by 10 cols with 15 rabbits";
+    private static final String FIVE_TWENTY_PREF_NAME = "5 rows by 10 cols with 20 rabbits";
+
+    private static final String SIX_SIX_PREF_NAME = "6 rows by 15 cols with 6 rabbits";
+    private static final String SIX_TEN_PREF_NAME = "6 rows by 15 cols with 10 rabbits";
+    private static final String SIX_FIFTEEN_PREF_NAME = "6 rows by 15 cols with 15 rabbits";
+    private static final String SIX_TWENTY_PREF_NAME = "6 rows by 15 cols with 20 rabbits";
+
 
     /*
     Singleton support
@@ -73,11 +89,12 @@ public class OptionsData {
         saveValue(context, NUM_RABBITS_PREF_NAME, numberRabbits);
     }
 
-    public boolean getEraseGamesPlayed(){
-        return eraseGamesPlayed;
+    public int getNumberGamesPlayed(Context context){
+        return loadValue(context, NUM_GAMES_PREF_NAME, R.integer.default_num_games_played);
     }
 
-    public void setEraseGamesPlayed(boolean eraseGamesPlayed){
-        this.eraseGamesPlayed = eraseGamesPlayed;
+    public void setNumberGamesPlayed(Context context, int numGamesPlayed){
+        saveValue(context, NUM_GAMES_PREF_NAME, numGamesPlayed);
     }
+
 }

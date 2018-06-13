@@ -13,19 +13,12 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.application.jasleen.gardentrouble.model.Game;
 import com.application.jasleen.gardentrouble.model.OptionsData;
 
 import static java.lang.Boolean.TRUE;
 
 public class OptionsActivity extends AppCompatActivity {
-    /*
-    private static final String NUM_RABBITS_PREF_NAME = "Num Rabbits Selected";
-    private static final String PREFS_NAME = "AppRabbitPrefs";
-    private static final String COL_SIZE_PREF_NAME = "Col Size Selected";
-    private static final String COL_PREFS_NAME = "AppColSizePrefs";
-    private static final String ROW_SIZE_PREF_NAME = "Row Size Selected";
-    private static final String ROW_PREFS_NAME = "AppRowSizePrefs";
-*/
 
     private OptionsData optionsData;
 
@@ -47,7 +40,7 @@ public class OptionsActivity extends AppCompatActivity {
         btnEraseTimesPlayed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                optionsData.setEraseGamesPlayed(TRUE);
+                optionsData.setNumberGamesPlayed(getApplicationContext(), 0);
             }
         });
     }
