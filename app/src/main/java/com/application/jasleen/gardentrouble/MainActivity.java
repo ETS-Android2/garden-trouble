@@ -14,12 +14,18 @@ import android.widget.Toast;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Main Activity supports the Main Screen.
+ * Has 2 animations on one rabbit and can skip to Main Menu after 4.5 extra seconds
+ */
 public class MainActivity extends AppCompatActivity {
+
     private static final String TAG = "MainActivity";
     private ImageView rabbitImage;
     long animationDuration = 4500;
     Timer timer;
     Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setUpSkipButton();
         moveRotateAnimation();
 
-        //timer to move to the next activity by itself
+        // Timer to move to the next activity by itself
         timer = new Timer();
         timer.schedule(new TimerTask(){
             @Override
@@ -58,14 +64,12 @@ public class MainActivity extends AppCompatActivity {
                     timer.cancel();
                 }
                 startActivity(intent);
-
                 finish();
-
             }
         });
     }
 
-    //Animation of Gopher in the beginning
+    //Animation of Rabbit in the beginning
     private void moveRotateAnimation() {
 
         Log.i( TAG, "Started animations");
@@ -83,7 +87,5 @@ public class MainActivity extends AppCompatActivity {
         animatorSet.playTogether(animatorX, animatorRotate);
         animatorSet.start();
 
-
     }
-
 }

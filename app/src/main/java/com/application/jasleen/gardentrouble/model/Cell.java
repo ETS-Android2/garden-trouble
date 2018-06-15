@@ -2,10 +2,8 @@ package com.application.jasleen.gardentrouble.model;
 
 import static java.lang.Boolean.FALSE;
 
-//ANYTHING TO THROW FOR BOOLEAN?
 /**
- * Manages the state of a cell
- * @author Jasleen Kaur
+ * Cell class which stores and manages information about the state of a single cell
  */
 public class Cell {
 
@@ -29,7 +27,7 @@ public class Cell {
         this.rowColumnNumberRabbits = 0;
     }
 
-    // Return true or false if cell has rabbit or not
+    // Return if cell has rabbit or not
     public boolean getHasRabbit() {
         return hasRabbit;
     }
@@ -65,7 +63,7 @@ public class Cell {
     }
 
     // Set the total number of rabbits that appear in the rows and columns of the cell.
-    // Throws IllegalArgumentException if weight is less than 0.
+    // Throws IllegalArgumentException if number of rabbits is less than 0.
     public void setRowColumnNumberRabbits(int rowColumnNumberRabbits){
         if (rowColumnNumberRabbits < 0){
             throw new IllegalArgumentException("Number of rabbits in column and row of cell combined must be >= 0");

@@ -1,16 +1,14 @@
 package com.application.jasleen.gardentrouble.model;
 
-/*
-Singleton class for storing options data
-Saves and retrieves values
- */
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import com.application.jasleen.gardentrouble.R;
-
 import static android.content.Context.MODE_PRIVATE;
-import static java.lang.Boolean.FALSE;
+
+/**
+ *  Singleton class for storing the options data
+ *  Saves and loads values for each data
+ */
 
 public class OptionsData {
     private static final String NUM_RABBITS_PREF_NAME = "Num Rabbits Selected";
@@ -18,25 +16,10 @@ public class OptionsData {
     private static final String ROW_SIZE_PREF_NAME = "Row Size Selected";
     private static final String NUM_GAMES_PREF_NAME = "Number of Games Played";
 
-    private static final String FOUR_SIX_PREF_NAME = "4 rows by 6 cols with 6 rabbits";
-    private static final String FOUR_TEN_PREF_NAME = "4 rows by 6 cols with 10 rabbits";
-    private static final String FOUR_FIFTEEN_PREF_NAME = "4 rows by 6 cols with 15 rabbits";
-    private static final String FOUR_TWENTY_PREF_NAME = "4 rows by 6 cols with 20 rabbits";
-
-    private static final String FIVE_SIX_PREF_NAME = "5 rows by 10 cols with 6 rabbits";
-    private static final String FIVE_TEN_PREF_NAME = "5 rows by 10 cols with 10 rabbits";
-    private static final String FIVE_FIFTEEN_PREF_NAME = "5 rows by 10 cols with 15 rabbits";
-    private static final String FIVE_TWENTY_PREF_NAME = "5 rows by 10 cols with 20 rabbits";
-
-    private static final String SIX_SIX_PREF_NAME = "6 rows by 15 cols with 6 rabbits";
-    private static final String SIX_TEN_PREF_NAME = "6 rows by 15 cols with 10 rabbits";
-    private static final String SIX_FIFTEEN_PREF_NAME = "6 rows by 15 cols with 15 rabbits";
-    private static final String SIX_TWENTY_PREF_NAME = "6 rows by 15 cols with 20 rabbits";
-
-
     /*
     Singleton support
-     */
+    */
+
     private static OptionsData instance;
 
     private OptionsData(){
@@ -49,15 +32,18 @@ public class OptionsData {
         }
         return instance;
     }
+
     /*
      Normal object code
     */
+
     private void saveValue(Context context, String key, int value){
         SharedPreferences prefs = context.getSharedPreferences(key, MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt(key, value);
         editor.apply();
     }
+
     private int loadValue(Context context, String key, int id){
         SharedPreferences prefs = context.getSharedPreferences(key, MODE_PRIVATE);
         int defaultVal = context.getResources().getInteger(id);
@@ -74,7 +60,6 @@ public class OptionsData {
 
     public int getCols(Context context){
         return loadValue(context, COL_SIZE_PREF_NAME, R.integer.default_col_size);
-
     }
 
     public void setCols(Context context, int numCols){
@@ -96,5 +81,4 @@ public class OptionsData {
     public void setNumberGamesPlayed(Context context, int numGamesPlayed){
         saveValue(context, NUM_GAMES_PREF_NAME, numGamesPlayed);
     }
-
 }

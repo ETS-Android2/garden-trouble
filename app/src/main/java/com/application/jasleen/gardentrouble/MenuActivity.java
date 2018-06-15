@@ -9,6 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+/**
+ * Menu Activity supports the Menu UI.
+ * Displays a fancy screen and buttons for other activities.
+ */
+
 public class MenuActivity extends AppCompatActivity {
 
     @Override
@@ -19,6 +24,10 @@ public class MenuActivity extends AppCompatActivity {
         setUpPlayGameButton();
         setUpHelpButton();
         setUpOptionsButton();
+    }
+    //Menu Activity creates itself
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, MenuActivity.class);
     }
 
     private void setUpOptionsButton() {
@@ -65,11 +74,4 @@ public class MenuActivity extends AppCompatActivity {
             }
         });
     }
-
-    //Menu Activity creates itself
-    public static Intent makeIntent(Context context) {
-        return new Intent(context, MenuActivity.class);
-    }
-
-
 }

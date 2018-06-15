@@ -5,14 +5,14 @@
         <item>5</item>
         <item>6</item>
     </integer-array>
-    <integer name="default_row_size">3</integer>
+    <integer name="default_row_size">4</integer>
 
     <integer-array name="num_grid_size_col">
         <item>6</item>
         <item>10</item>
         <item>15</item>
     </integer-array>
-    <integer name="default_col_size">7</integer>
+    <integer name="default_col_size">5</integer>
 
     <integer-array name="num_rabbits">
         <item>6</item>

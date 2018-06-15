@@ -6,9 +6,9 @@
     <string name="btn_skip">SKIP</string>
     <string name="description_grandma">grandma</string>
     <string name="gopher_welcome">gopher_welcome</string>
-    <string name="play_game">PLAY GAME!</string>
-    <string name="options">OPTIONS</string>
-    <string name="help">HELP</string>
+    <string name="play_game">\nPLAY\n GAME!</string>
+    <string name="options">\n\nOPTIONS</string>
+    <string name="help">\n\nHELP</string>
     <string name="main_menu_string_gopher_welcome">Main menu @string/gopher_welcome</string>
     <string name="main_menu">MAIN MENU</string>
     <string name="number_of_gophers">Number of gophers</string>
@@ -23,13 +23,13 @@
     <string name="congratulations_you_won">Congratulations! You Won!</string>
     <string name="congratulations_you_helped_grandma_joe_find_all_the_rabbits_in_her_garden">Congratulations! You helped Grandma Joe find all the rabbits in her garden!</string>
     <string name="congratulations_message_title">Congratulations! You Won!</string>
-    <string name="txtCredit">ABOUT THE AUTHOR:\n\nHi there! My Name is Jasleen Kaur and I am a student in <a href="https://www.cs.sfu.ca/CourseCentral/276/bfraser/index.html">CMPT 276.</a>
+    <string name="txtCredit">ABOUT THE AUTHOR:\n\nHi there! My name is Jasleen Kaur and I am a student in <a href="https://www.cs.sfu.ca/CourseCentral/276/bfraser/index.html">CMPT 276.</a>
         Hope you enjoy this game made by a little brown girl :)
         \n\nHOW TO PLAY:\n\nGrandma Joe loves planting vegetables in her garden.
         Unfortunately, cute little rabbits have started to eat her vegetables!
-        Help Grandma Joe find all the rabbits in her garden by clicking on the cells.
-        When no rabbit is found, the cell will be scanned and a hint will be given stating how many rabbits are present in the column or row of the cell clicked.
-        When a rabbit is found, you will be updated with how many rabbits are remaining to be found. Find all the rabbits in the least number of scans\n\nGood Luck!
+        Help Grandma Joe find all the rabbits in her garden by tapping on the cells.
+        When no rabbit is found, the cell will be scanned and a hint will be provided stating how many rabbits are hidden in the column and row of the cell tapped.
+        When a rabbit is found, you will be updated with how many rabbits are remaining to be found. Find all the rabbits in the least number of scans.\n\nGood Luck!
         \n\n RESOURCES/IMAGES:
         \n\n
         <a href="http://chimneybells.blogspot.com/2013/12/garden-cartoon-pictures.html">Welcome Screen Background and App Icon</a>.\n
@@ -37,9 +37,11 @@
         <a href="http://cartoon-bunny-rabbits.clipartonline.net/">Welcome Rabbit</a>.\n
         <a href="http://zorlag.com/blog/inspiring-modern-bedroom-designs-that-make-you-thrilled/#">Main Menu Background</a>.\n
         <a href="https://www.pinterest.com.au/pin/298856125250574791/">Butterfly</a>.\n
+        <a href="http://www.clipartpanda.com/clipart_images/clip-art-categories-57853835">Grass Button Background</a>.\n
         <a href="https://gallery.yopriceville.com/Free-Clipart-Pictures/Cartoons-PNG/Cute_Bunny_Cartoon_Transparent_Clip_Art_Image#.WyCaNIpKjIU">Rabbit Main Menu</a>.\n
         <a href="https://www.dreamstime.com/stock-illustration-happy-bunny-cartoon-hole-illustration-image76886576">Grid Rabbit</a>.\n
         <a href="https://www.pinterest.ca/nikmahzon/cartoon-landscape-background/">Game Background</a>.\n
+        <a href="https://www.pinterest.ca/pin/557531628846470586/">Congratulations Dialog Rabbit</a>
         <a href="https://br.pinterest.com/pin/244249979770598529/">Options Screen Background</a>.\n
         <a href="http://getwallpapers.com/collection/background-clipart">Help Screen Background</a>.\n\n
         MUSIC:\n\n
@@ -49,10 +51,10 @@
     <string name="txt_help">HELP</string>
     <string name="erase_times_played">Erase Times Played</string>
     <string name="grid_size">%d rows by %d columns</string>
-    <string name="Number_rabbits_found">Found %d of %d</string>
+    <string name="Number_rabbits_found">Found %d of %d Rabbits</string>
     <string name="Times_played">Number of Games Started: %d</string>
     <string name="Rabbit_cell_checked"> %d</string>
-    <string name="Found_rabbit_update">Found %d of %d</string>
+    <string name="Found_rabbit_update">Found %d of %d Rabbits</string>
     <string name="row_current_update">%d</string>
     <string name="col_current_update">%d</string>
     <string name="no_rabbit_found">%d</string>
