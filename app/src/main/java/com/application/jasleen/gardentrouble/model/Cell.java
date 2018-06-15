@@ -5,6 +5,7 @@ import static java.lang.Boolean.FALSE;
 /**
  * Cell class which stores and manages information about the state of a single cell
  */
+
 public class Cell {
 
     private boolean hasRabbit;
